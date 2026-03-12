@@ -34,7 +34,7 @@ const md = markdownit({
       useMermaidViewer()
       const pastelyMermaid = document.createElement('pastely-mermaid-viewer')
       pastelyMermaid.setAttribute('mermaid-code', str?.trim() || '')
-      container.appendChild(pastefyMermaid)
+      container.appendChild(pastelyMermaid)
       return container.outerHTML
     }
 
@@ -44,7 +44,7 @@ const md = markdownit({
     pastelyHighlighted.setAttribute('contents', str?.trim() || '')
     pastelyHighlighted.setAttribute('show-copy-button', 'true')
 
-    container.appendChild(pastefyHighlighted)
+    container.appendChild(pastelyHighlighted)
     return container.outerHTML
   },
 })
