@@ -321,6 +321,24 @@ public class Paste extends Model {
         if (Pastely.getInstance().isElasticsearchEnabled()) {
             Pastely.getInstance().executeAsync(() -> ElasticPaste.store(this));
         }
+
+        // Create revision if version control enabled and user exists
+        if (userId != null) {
+            User user = User.get(userId);
+            if (user != null) {
+                // Check if this is first save (no revisions yet)
+                long revisionCount = Repo.get(PasteRevision.class)
+                    .where("pasteId", key)
+                    .count();
+
+                if (revisionCount == 0) {
+                    // Create initial revision
+                    Pastely.getInstance().executeAsync(() -> {
+                        cc.allyapps.pastely.services.VersionControlService.createInitialRevision(this, user);
+                    });
+                }
+            }
+        }
     }
 
     public void superSave() {

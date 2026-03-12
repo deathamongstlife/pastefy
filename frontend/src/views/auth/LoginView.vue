@@ -39,70 +39,84 @@ async function login() {
 </script>
 
 <template>
-  <div class="mx-auto mt-20 w-full max-w-md px-4">
-    <div class="rounded-lg border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-      <h1 class="mb-6 text-3xl font-bold">Sign In to Pastely</h1>
+  <div class="flex min-h-screen items-center justify-center bg-dark-bg scanlines p-4">
+    <div class="cyber-card w-full max-w-md rounded-lg p-8">
+      <h1 class="neon-text mb-8 text-center text-4xl font-bold text-cyber-blue">
+        SIGN IN
+      </h1>
 
-      <form @submit.prevent="login" class="space-y-4">
+      <form @submit.prevent="login" class="space-y-6">
         <div>
-          <label for="email" class="mb-2 block text-sm font-medium">Email</label>
+          <label for="email" class="mb-2 block text-sm font-medium uppercase text-cyber-blue">Email</label>
           <InputText
             id="email"
             v-model="email"
             type="email"
             placeholder="you@example.com"
-            class="w-full"
+            class="cyber-input w-full"
             required
           />
         </div>
 
         <div>
-          <label for="password" class="mb-2 block text-sm font-medium">Password</label>
+          <label for="password" class="mb-2 block text-sm font-medium uppercase text-cyber-blue">Password</label>
           <Password
             id="password"
             v-model="password"
             :feedback="false"
             toggleMask
-            class="w-full"
+            class="cyber-input w-full"
             inputClass="w-full"
             required
           />
         </div>
 
-        <div v-if="error" class="text-sm text-red-600">
+        <div v-if="error" class="rounded-lg border border-cyber-pink bg-red-900/20 p-3 text-center text-cyber-pink">
           {{ error }}
         </div>
 
         <Button
           type="submit"
-          label="Sign In"
+          label="ACCESS SYSTEM"
           :loading="isLoading"
-          class="w-full"
+          class="cyber-button w-full"
         />
       </form>
 
-      <div class="mt-4 text-center text-sm">
-        <router-link to="/auth/forgot-password" class="text-blue-600 hover:underline dark:text-blue-400">
-          Forgot password?
-        </router-link>
-      </div>
-
-      <div class="mt-4 text-center text-sm">
-        Don't have an account?
-        <router-link to="/auth/register" class="text-blue-600 hover:underline dark:text-blue-400">
-          Sign up
+      <div class="mt-6 text-center">
+        <router-link to="/auth/forgot-password" class="text-cyber-blue transition-colors hover:text-cyber-pink">
+          FORGOT PASSWORD?
         </router-link>
       </div>
 
       <div class="my-6 flex items-center">
-        <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
-        <span class="px-4 text-sm text-gray-500 dark:text-gray-400">Or continue with</span>
-        <div class="flex-1 border-t border-gray-300 dark:border-gray-700"></div>
+        <div class="flex-1 border-t border-cyber-blue opacity-30"></div>
+        <span class="px-4 text-sm text-text-muted">OR</span>
+        <div class="flex-1 border-t border-cyber-blue opacity-30"></div>
       </div>
 
       <div class="space-y-2">
-        <Button label="GitHub" icon="pi pi-github" class="w-full" outlined @click="router.push('/api/v2/auth/oauth2/github')" />
-        <Button label="Google" icon="pi pi-google" class="w-full" outlined @click="router.push('/api/v2/auth/oauth2/google')" />
+        <Button
+          label="GitHub"
+          icon="pi pi-github"
+          class="w-full"
+          outlined
+          @click="router.push('/api/v2/auth/oauth2/github')"
+        />
+        <Button
+          label="Google"
+          icon="pi pi-google"
+          class="w-full"
+          outlined
+          @click="router.push('/api/v2/auth/oauth2/google')"
+        />
+      </div>
+
+      <div class="mt-6 text-center">
+        <span class="text-text-secondary">NEW USER? </span>
+        <router-link to="/auth/register" class="text-cyber-pink transition-colors hover:text-cyber-blue">
+          REGISTER
+        </router-link>
       </div>
     </div>
   </div>

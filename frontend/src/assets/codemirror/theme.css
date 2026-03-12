@@ -1,113 +1,255 @@
-.hljs {
-  @apply block overflow-x-auto p-2 bg-transparent;
-}
-
-.hljs, .hljs-tag, .hljs-subst, .cm-s-pastely span.cm-tag {
-  @apply text-gray-400;
-}
-
-.hljs-strong, .hljs-emphasis, .cm-s-pastely span.cm-strong, .cm-s-pastely span.cm-emphasis {
-  @apply text-gray-500;
-}
-
-.hljs-bullet, .hljs-quote, .hljs-number, .hljs-regexp, .hljs-literal, .hljs-link, .cm-s-pastely span.cm-number, .cm-s-pastely span.cm-literal {
-  @apply text-yellow-500 font-medium;
-}
-
-.hljs-code, .hljs-title, .hljs-section, .hljs-selector-class, .cm-s-pastely span.cm-title, .cm-s-pastely span.cm-section, .cm-s-pastely span.cm-selector-class {
-  @apply text-green-700;
-}
-.dark {
-  .hljs-code, .hljs-title, .hljs-section, .hljs-selector-class, .cm-s-pastely span.cm-title, .cm-s-pastely span.cm-section, .cm-s-pastely span.cm-selector-class {
-  @apply text-green-600;
-  }
-}
-
-.hljs-strong, .cm-s-pastely span.cm-strong {
-  @apply font-normal;
-}
-
-.hljs-emphasis, .cm-s-pastely span.cm-emphasis {
-  @apply italic;
-}
-
-.hljs-keyword, .hljs-selector-tag, .hljs-name, .cm-s-pastely span.cm-keyword, .cm-s-pastely span.cm-selector-tag {
-  @apply text-pink-600 font-medium;
-}
-
-.hljs-symbol, .hljs-attribute, .hljs-attr, .cm-s-pastely span.cm-attribute, .cm-s-pastely span.cm-symbol {
-  @apply text-teal-600;
-}
-
-.hljs-type, .hljs-built_in, .hljs-builtin-name, .hljs-selector-id, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-addition, .hljs-variable, .hljs-template-variable, .hljs-deletion, .cm-s-pastely span.cm-type, .cm-s-pastely span.cm-builtin, .cm-s-pastely span.cm-variable, .cm-s-pastely span.cm-deletion {
-  @apply text-red-600 font-normal;
-}
-
-.hljs-meta, .cm-s-pastely span.cm-meta {
-  @apply text-red-500/90;
-}
-
-.hljs-comment, .cm-s-pastely span.cm-comment {
-  @apply opacity-50;
-}
-
-.hljs-string, .cm-s-pastely span.cm-string {
-  @apply text-green-700;
-}
-.dark {
-  .hljs-string, .cm-s-pastely span.cm-string {
-    @apply text-green-500;
-  }
-}
-
-
+/* Cyberpunk CodeMirror Theme */
 .cm-s-pastely.CodeMirror {
-  @apply bg-neutral-100 dark:bg-neutral-900 text-black dark:text-white rounded-md text-sm;
+  @apply bg-dark-bg text-text-primary rounded-md text-sm;
+  border: 1px solid #00F5FF;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
 
   * {
     font-family: "JetBrains Mono Variable", monospace;
   }
 }
 
+.cm-s-pastely .CodeMirror-gutters {
+  @apply bg-darker-bg;
+  border-right: 1px solid #00F5FF;
+  box-shadow: inset -1px 0 5px rgba(0, 245, 255, 0.3);
+}
+
+.cm-s-pastely .CodeMirror-linenumber {
+  color: #00F5FF;
+  text-shadow: 0 0 5px #00F5FF;
+}
+
 .cm-s-pastely .CodeMirror-cursor {
-  @apply border-l border-black dark:border-white;
+  border-left: 2px solid #FF006E;
+  box-shadow: 0 0 5px #FF006E;
 }
 
 .cm-s-pastely .CodeMirror-matchingbracket {
-  @apply underline  text-black dark:text-white;
+  @apply underline;
+  color: #FFD60A;
+  text-shadow: 0 0 5px #FFD60A;
 }
 
 .cm-s-pastely div.CodeMirror-selected {
-  @apply bg-neutral-300 dark:bg-neutral-700;
+  background: rgba(139, 0, 255, 0.3);
+}
+
+.cm-s-pastely .CodeMirror-activeline-background {
+  background: rgba(0, 245, 255, 0.1);
 }
 
 .codemirror-container.bordered {
-  @apply border border-neutral-600;
+  @apply border border-neon-border;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
 }
 
-.cm-s-pastely .CodeMirror-line {
+.cm-s-pastely .CodeMirror-line::selection,
+.cm-s-pastely .CodeMirror-line > span::selection,
+.cm-s-pastely .CodeMirror-line > span > span::selection {
+  background: rgba(139, 0, 255, 0.4);
 }
-.cm-s-pastely .CodeMirror-line::selection, .cm-s-pastely .CodeMirror-line > span::selection, .cm-s-pastely .CodeMirror-line > span > span::selection {
-  @apply bg-neutral-200 dark:bg-neutral-600;
+
+.cm-s-pastely .CodeMirror-line::-moz-selection,
+.cm-s-pastely .CodeMirror-line > span::-moz-selection,
+.cm-s-pastely .CodeMirror-line > span > span::-moz-selection {
+  background: rgba(139, 0, 255, 0.4);
 }
-.cm-s-pastely .CodeMirror-line::-moz-selection, .cm-s-pastely .CodeMirror-line > span::-moz-selection, .cm-s-pastely .CodeMirror-line > span > span::-moz-selection {
-  @apply bg-neutral-600;
-}
-.cm-s-pastely .CodeMirror-gutters {
-  @apply bg-neutral-100 dark:bg-neutral-900 border-r-1 border-neutral-300 dark:border-neutral-600;
-}
+
 .cm-s-pastely .CodeMirror-guttermarker {
-  @apply text-black dark:text-white bg-neutral-300;
+  color: #FF006E;
+  background: rgba(255, 0, 110, 0.2);
 }
+
 .cm-s-pastely .CodeMirror-guttermarker-subtle {
-  @apply bg-neutral-100 dark:bg-neutral-800;
-}
-.cm-s-pastely .CodeMirror-activeline-background {
-  @apply  bg-neutral-200 dark:bg-neutral-800;
+  color: #00F5FF;
 }
 
+.cm-s-pastely .cm-animate-fat-cursor {
+  background-color: rgba(255, 0, 110, 0.5) !important;
+}
 
+/* Syntax Highlighting - Cyberpunk Colors */
 
-.cm-s-pastely .cm-animate-fat-cursor { background-color: #a2a8a175 !important; }
+/* Keywords - Hot Pink */
+.cm-s-pastely span.cm-keyword,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name {
+  color: #FF006E;
+  text-shadow: 0 0 3px #FF006E;
+  @apply font-medium;
+}
 
+/* Operators - Cyan */
+.cm-s-pastely span.cm-operator,
+.hljs-operator {
+  color: #00F5FF;
+}
 
+/* Variables - Green */
+.cm-s-pastely span.cm-variable-2,
+.cm-s-pastely span.cm-variable,
+.cm-s-pastely span.cm-def,
+.hljs-variable,
+.hljs-template-variable {
+  color: #00FF41;
+  text-shadow: 0 0 3px #00FF41;
+}
+
+/* Types - Purple */
+.cm-s-pastely span.cm-variable-3,
+.cm-s-pastely span.cm-type,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #8B00FF;
+  text-shadow: 0 0 3px #8B00FF;
+}
+
+/* Built-ins - Yellow */
+.cm-s-pastely span.cm-builtin,
+.hljs-builtin {
+  color: #FFD60A;
+}
+
+/* Atoms & Booleans - Cyan */
+.cm-s-pastely span.cm-atom,
+.hljs-atom,
+.hljs-literal {
+  color: #00F5FF;
+  text-shadow: 0 0 3px #00F5FF;
+}
+
+/* Numbers - Hot Pink */
+.cm-s-pastely span.cm-number,
+.hljs-number,
+.hljs-literal {
+  color: #FF006E;
+  @apply font-medium;
+}
+
+/* Strings - Yellow */
+.cm-s-pastely span.cm-string,
+.cm-s-pastely span.cm-string-2,
+.hljs-string,
+.hljs-code,
+.hljs-title,
+.hljs-section {
+  color: #FFD60A;
+  text-shadow: 0 0 3px #FFD60A;
+}
+
+/* Comments - Muted */
+.cm-s-pastely span.cm-comment,
+.hljs-comment,
+.hljs-quote {
+  color: #606060;
+  @apply italic opacity-50;
+}
+
+/* Tags - Pink */
+.cm-s-pastely span.cm-tag,
+.hljs-tag {
+  color: #FF006E;
+}
+
+/* Attributes - Cyan */
+.cm-s-pastely span.cm-attribute,
+.cm-s-pastely span.cm-symbol,
+.hljs-attribute,
+.hljs-symbol,
+.hljs-attr {
+  color: #00F5FF;
+}
+
+/* Properties - Green */
+.cm-s-pastely span.cm-property,
+.hljs-property {
+  color: #00FF41;
+}
+
+/* Qualifiers - Cyan */
+.cm-s-pastely span.cm-qualifier,
+.hljs-qualifier {
+  color: #00F5FF;
+}
+
+/* Meta - Purple */
+.cm-s-pastely span.cm-meta,
+.hljs-meta {
+  color: #8B00FF;
+  @apply opacity-90;
+}
+
+/* Errors - Red with glow */
+.cm-s-pastely span.cm-error,
+.hljs-error {
+  background: rgba(255, 0, 110, 0.3);
+  color: #FF006E;
+  text-shadow: 0 0 5px #FF006E;
+}
+
+/* Regex - Yellow */
+.hljs-regexp,
+.hljs-link {
+  color: #FFD60A;
+  @apply font-medium;
+}
+
+/* Bullets - Yellow */
+.hljs-bullet {
+  color: #FFD60A;
+  @apply font-medium;
+}
+
+/* Addition - Green */
+.hljs-addition,
+.cm-s-pastely span.cm-addition {
+  color: #00FF41;
+  background: rgba(0, 255, 65, 0.1);
+}
+
+/* Deletion - Pink */
+.hljs-deletion,
+.cm-s-pastely span.cm-deletion {
+  color: #FF006E;
+  background: rgba(255, 0, 110, 0.1);
+}
+
+/* Strong emphasis */
+.cm-s-pastely span.cm-strong,
+.hljs-strong {
+  @apply font-bold;
+  color: #E0E0E0;
+}
+
+/* Emphasis */
+.cm-s-pastely span.cm-emphasis,
+.hljs-emphasis {
+  @apply italic;
+  color: #A0A0A0;
+}
+
+/* Highlight.js base styling */
+.hljs {
+  @apply block overflow-x-auto p-2 bg-dark-bg;
+  border: 1px solid #00F5FF;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+  border-radius: 0.375rem;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #E0E0E0;
+}
+
+/* Selector classes - Green */
+.hljs-selector-class,
+.cm-s-pastely span.cm-selector-class {
+  color: #00FF41;
+}

@@ -19,7 +19,7 @@ const appStore = useAppStore()
 </script>
 <template>
   <div
-    class="flex h-full flex-col justify-between overflow-auto border-r border-neutral-200 bg-neutral-100 p-2 dark:border-neutral-800 dark:bg-neutral-900"
+    class="flex h-full flex-col justify-between overflow-auto border-r border-neon-border bg-darker-bg p-2 shadow-neon-blue"
     v-shortkey="['meta', 'k']"
     @shortkey="appStore.searchShown = true"
   >
@@ -28,7 +28,7 @@ const appStore = useAppStore()
         <Button
           as="router-link"
           :to="{ name: 'home-page' }"
-          class="border-neutral-400 bg-gradient-to-b from-[transparent] to-neutral-100 dark:border-neutral-600 dark:to-neutral-900"
+          class="neon-border-pink transition-all hover:shadow-neon-pink"
           size="small"
           icon="ti ti-home text-lg"
           label="home"
@@ -40,7 +40,7 @@ const appStore = useAppStore()
           v-if="appInfo.appInfo?.public_pastes_enabled"
           as="router-link"
           :to="{ name: 'explore' }"
-          class="border-neutral-400 bg-gradient-to-b from-[transparent] to-neutral-100 dark:border-neutral-600 dark:to-neutral-900"
+          class="neon-border transition-all hover:shadow-neon-blue"
           size="small"
           icon="ti ti-world text-lg"
           label="explore"
@@ -50,7 +50,7 @@ const appStore = useAppStore()
         />
         <Button
           @click="appStore.searchShown = true"
-          class="border-neutral-400 bg-gradient-to-b from-[transparent] to-neutral-100 dark:border-neutral-600 dark:to-neutral-900"
+          class="neon-border-purple transition-all hover:shadow-neon-purple"
           size="small"
           icon="ti ti-search text-lg"
           label="search"

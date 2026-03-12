@@ -19,6 +19,9 @@ public class CollaborationCursor extends Model {
     private String id;
 
     @Column(size = 8)
+    private String pasteId;
+
+    @Column(size = 8)
     private String sessionId;
 
     @Column(size = 8)
@@ -62,6 +65,14 @@ public class CollaborationCursor extends Model {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPasteId() {
+        return pasteId;
+    }
+
+    public void setPasteId(String pasteId) {
+        this.pasteId = pasteId;
     }
 
     public String getSessionId() {
@@ -150,5 +161,32 @@ public class CollaborationCursor extends Model {
 
     public void setLastSeenAt(Timestamp lastSeenAt) {
         this.lastSeenAt = lastSeenAt;
+    }
+
+    // Convenience methods for WebSocket usage
+    public Integer getLine() {
+        return cursorLine;
+    }
+
+    public void setLine(Integer line) {
+        this.cursorLine = line;
+        this.lastSeenAt = Timestamp.from(Instant.now());
+    }
+
+    public Integer getColumn() {
+        return cursorColumn;
+    }
+
+    public void setColumn(Integer column) {
+        this.cursorColumn = column;
+        this.lastSeenAt = Timestamp.from(Instant.now());
+    }
+
+    public String getColor() {
+        return userColor;
+    }
+
+    public void setColor(String color) {
+        this.userColor = color;
     }
 }

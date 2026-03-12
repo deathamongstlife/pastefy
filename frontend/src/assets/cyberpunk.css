@@ -1,0 +1,409 @@
+/* Cyberpunk Global Styles */
+* {
+  font-family: 'Orbitron', sans-serif;
+}
+
+body {
+  background-color: #0A0E27;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  color: #E0E0E0;
+}
+
+/* Neon text glow */
+.neon-text {
+  text-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 30px currentColor,
+    0 0 40px currentColor;
+}
+
+/* Neon border glow */
+.neon-border {
+  border: 2px solid #00F5FF;
+  box-shadow:
+    0 0 5px #00F5FF,
+    inset 0 0 5px #00F5FF,
+    0 0 10px #00F5FF,
+    inset 0 0 10px #00F5FF;
+}
+
+.neon-border-pink {
+  border: 2px solid #FF006E;
+  box-shadow:
+    0 0 5px #FF006E,
+    inset 0 0 5px #FF006E,
+    0 0 10px #FF006E,
+    inset 0 0 10px #FF006E;
+}
+
+.neon-border-purple {
+  border: 2px solid #8B00FF;
+  box-shadow:
+    0 0 5px #8B00FF,
+    inset 0 0 5px #8B00FF,
+    0 0 10px #8B00FF,
+    inset 0 0 10px #8B00FF;
+}
+
+/* Glitch effect */
+.glitch {
+  position: relative;
+  animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 0.05em 0 0 #00F5FF, -0.05em -0.025em 0 #FF006E;
+  }
+  14% {
+    text-shadow: 0.05em 0 0 #00F5FF, -0.05em -0.025em 0 #FF006E;
+  }
+  15% {
+    text-shadow: -0.05em -0.025em 0 #00F5FF, 0.05em 0.025em 0 #FF006E;
+  }
+  49% {
+    text-shadow: -0.05em -0.025em 0 #00F5FF, 0.05em 0.025em 0 #FF006E;
+  }
+  50% {
+    text-shadow: 0.025em 0.05em 0 #00F5FF, 0.05em 0 0 #FF006E;
+  }
+  99% {
+    text-shadow: 0.025em 0.05em 0 #00F5FF, 0.05em 0 0 #FF006E;
+  }
+  100% {
+    text-shadow: -0.025em 0 0 #00F5FF, -0.025em -0.025em 0 #FF006E;
+  }
+}
+
+/* Scanline effect */
+.scanlines {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlines::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 245, 255, 0.05) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+  z-index: 1000;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Card styles */
+.cyber-card {
+  background: linear-gradient(135deg, #151932 0%, #1E2340 100%);
+  border: 1px solid #00F5FF;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+  border-color: #FF006E;
+}
+
+/* Button styles */
+.cyber-button {
+  background: linear-gradient(45deg, #8B00FF, #FF006E) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 20px rgba(139, 0, 255, 0.5) !important;
+  transition: all 0.3s ease;
+}
+
+.cyber-button:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 110, 0.7) !important;
+  transform: translateY(-2px);
+}
+
+/* Input styles */
+.cyber-input {
+  background: rgba(21, 25, 50, 0.8);
+  border: 1px solid #00F5FF;
+  color: #E0E0E0;
+  box-shadow: inset 0 0 10px rgba(0, 245, 255, 0.2);
+}
+
+.cyber-input:focus {
+  border-color: #FF006E;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+  outline: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #151932;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #8B00FF, #FF006E);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FF006E, #00F5FF);
+}
+
+/* PrimeVue Button Overrides */
+.p-button {
+  background: linear-gradient(45deg, #8B00FF, #FF006E) !important;
+  border: 1px solid #00F5FF !important;
+  color: white !important;
+  font-family: 'Orbitron', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 15px rgba(139, 0, 255, 0.5) !important;
+  transition: all 0.3s ease !important;
+}
+
+.p-button:hover {
+  box-shadow: 0 0 25px rgba(255, 0, 110, 0.7) !important;
+  transform: translateY(-2px);
+}
+
+.p-button-outlined {
+  background: transparent !important;
+  border: 2px solid #00F5FF !important;
+  color: #00F5FF !important;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.3) !important;
+}
+
+.p-button-outlined:hover {
+  background: rgba(0, 245, 255, 0.1) !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-button-text {
+  background: transparent !important;
+  border: none !important;
+  color: #00F5FF !important;
+  box-shadow: none !important;
+}
+
+.p-button-text:hover {
+  background: rgba(0, 245, 255, 0.1) !important;
+  color: #FF006E !important;
+}
+
+/* PrimeVue Input Overrides */
+.p-inputtext, .p-textarea {
+  background: rgba(21, 25, 50, 0.8) !important;
+  border: 1px solid #00F5FF !important;
+  color: #E0E0E0 !important;
+  font-family: 'Orbitron', sans-serif !important;
+  box-shadow: inset 0 0 10px rgba(0, 245, 255, 0.2) !important;
+}
+
+.p-inputtext:focus, .p-textarea:focus {
+  border-color: #FF006E !important;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.5) !important;
+}
+
+.p-inputtext::placeholder, .p-textarea::placeholder {
+  color: #606060;
+}
+
+/* PrimeVue Select Overrides */
+.p-select, .p-treeselect {
+  background: rgba(21, 25, 50, 0.8) !important;
+  border: 1px solid #00F5FF !important;
+  color: #E0E0E0 !important;
+  box-shadow: inset 0 0 10px rgba(0, 245, 255, 0.2) !important;
+}
+
+.p-select:focus, .p-treeselect:focus {
+  border-color: #FF006E !important;
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.5) !important;
+}
+
+/* PrimeVue Card Overrides */
+.p-card {
+  background: linear-gradient(135deg, #151932 0%, #1E2340 100%) !important;
+  border: 1px solid #00F5FF !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
+  color: #E0E0E0 !important;
+}
+
+.p-card:hover {
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.5) !important;
+  border-color: #FF006E !important;
+}
+
+.p-card-title {
+  color: #00F5FF !important;
+  text-shadow: 0 0 10px #00F5FF;
+}
+
+/* PrimeVue Dialog Overrides */
+.p-dialog {
+  background: #0A0E27 !important;
+  border: 2px solid #00F5FF !important;
+  box-shadow: 0 0 50px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-dialog-header {
+  background: linear-gradient(90deg, #8B00FF, #FF006E) !important;
+  color: white !important;
+  font-family: 'Orbitron', sans-serif !important;
+  border-bottom: 2px solid #00F5FF !important;
+  text-transform: uppercase;
+}
+
+.p-dialog-content {
+  color: #E0E0E0 !important;
+  background: #0A0E27 !important;
+}
+
+.p-dialog-footer {
+  background: #0A0E27 !important;
+  border-top: 1px solid #00F5FF !important;
+}
+
+/* PrimeVue Menu Overrides */
+.p-menu, .p-contextmenu {
+  background: #151932 !important;
+  border: 1px solid #00F5FF !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
+}
+
+.p-menuitem-link {
+  color: #E0E0E0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.p-menuitem-link:hover {
+  background: rgba(0, 245, 255, 0.2) !important;
+  color: #00F5FF !important;
+}
+
+/* PrimeVue Toast Overrides */
+.p-toast {
+  font-family: 'Orbitron', sans-serif !important;
+}
+
+.p-toast-message {
+  background: linear-gradient(135deg, #151932 0%, #1E2340 100%) !important;
+  border: 1px solid #00F5FF !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5) !important;
+  color: #E0E0E0 !important;
+}
+
+.p-toast-message-success {
+  border-color: #00FF41 !important;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.5) !important;
+}
+
+.p-toast-message-info {
+  border-color: #00F5FF !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-toast-message-warn {
+  border-color: #FFD60A !important;
+  box-shadow: 0 0 20px rgba(255, 214, 10, 0.5) !important;
+}
+
+.p-toast-message-error {
+  border-color: #FF006E !important;
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.5) !important;
+}
+
+/* PrimeVue Divider Overrides */
+.p-divider.p-divider-horizontal:before {
+  border-top: 1px solid #00F5FF !important;
+  box-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
+}
+
+.p-divider.p-divider-vertical:before {
+  border-left: 1px solid #00F5FF !important;
+  box-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
+}
+
+/* PrimeVue Tabs Overrides */
+.p-tablist {
+  border-bottom: 2px solid #00F5FF !important;
+}
+
+.p-tab {
+  color: #A0A0A0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.p-tab:hover {
+  color: #00F5FF !important;
+}
+
+.p-tab-active {
+  color: #FF006E !important;
+  border-bottom: 2px solid #FF006E !important;
+  text-shadow: 0 0 10px #FF006E;
+}
+
+/* PrimeVue Confirm Dialog */
+.p-confirmdialog {
+  background: #0A0E27 !important;
+  border: 2px solid #00F5FF !important;
+  box-shadow: 0 0 50px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-confirmdialog-message {
+  color: #E0E0E0 !important;
+}
+
+/* PrimeVue Overlay Panel */
+.p-overlaypanel {
+  background: #151932 !important;
+  border: 1px solid #00F5FF !important;
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-overlaypanel-content {
+  color: #E0E0E0 !important;
+}
+
+/* PrimeVue Popover */
+.p-popover {
+  background: #151932 !important;
+  border: 1px solid #00F5FF !important;
+  box-shadow: 0 0 30px rgba(0, 245, 255, 0.5) !important;
+}
+
+.p-popover-content {
+  color: #E0E0E0 !important;
+}
+
+/* Code blocks cyberpunk styling */
+pre, code {
+  font-family: 'JetBrains Mono Variable', monospace !important;
+}

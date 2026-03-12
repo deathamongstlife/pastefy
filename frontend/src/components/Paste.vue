@@ -391,6 +391,16 @@ const showPreview = ref(true)
             aria-label="Tags"
           />
           <Button
+            v-if="!asEmbed"
+            @click="() => router.push(`/paste/${pasteId}/history`)"
+            severity="contrast"
+            text
+            rounded
+            icon="ti ti-clock-hour-4 text-xl"
+            v-tooltip="{ value: 'History', showDelay: 500 }"
+            aria-label="Version History"
+          />
+          <Button
             severity="contrast"
             @click="deletePaste"
             text

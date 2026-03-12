@@ -9,7 +9,9 @@ const currentUserStore = useCurrentUserStore()
 </script>
 
 <template>
-  <router-view />
+  <div class="min-h-screen bg-dark-bg scanlines">
+    <router-view />
+  </div>
   <Toast />
   <ConfirmDialog>
     <template #container="{ message, acceptCallback, rejectCallback }">

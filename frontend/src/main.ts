@@ -1,4 +1,5 @@
 import './assets/main.css'
+import './assets/cyberpunk.css'
 
 import { createApp, defineCustomElement, type App as VueApp, defineAsyncComponent } from 'vue'
 import * as vueFunctions from 'vue'

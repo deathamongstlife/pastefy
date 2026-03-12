@@ -44,7 +44,7 @@ await client.createPaste({
     <div v-else :ref="() => eventBus.emit('pageLoaded', 'home')">
       <div class="mx-auto mb-10 max-w-[1000px]">
         <div class="mb-5 flex items-center justify-between">
-          <h1 class="text-3xl font-bold">Pastefy</h1>
+          <h1 class="glitch neon-text text-5xl font-bold text-cyber-blue">PASTELY</h1>
 
           <Button
             v-if="!currentUserStore.user && currentUserStore.authTypes?.[0]"
@@ -62,17 +62,17 @@ await client.createPaste({
 
         <div class="mb-3 flex flex-col gap-3 md:grid md:h-[18rem] md:grid-cols-[2fr_1fr]">
           <div
-            class="flex h-full flex-col items-end overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 md:grid md:grid-cols-2 dark:border-neutral-700 dark:bg-neutral-800"
+            class="cyber-card flex h-full flex-col items-end overflow-hidden rounded-xl md:grid md:grid-cols-2"
           >
             <div class="flex h-full flex-col gap-3 p-4">
-              <h2 class="text-xl font-bold">Share Code</h2>
-              <p>
+              <h2 class="text-xl font-bold text-cyber-pink">Share Code</h2>
+              <p class="text-text-secondary">
                 Share your code snippets with the world. Paste your code and share it with others.
               </p>
             </div>
             <div>
               <div
-                class="rounded-tl-md border-t border-l border-neutral-300 dark:border-neutral-700"
+                class="rounded-tl-md border-t border-l border-cyber-blue"
               >
                 <Highlighted :contents="exampleCode" file-name=".js" />
               </div>
@@ -80,11 +80,11 @@ await client.createPaste({
           </div>
 
           <div
-            class="flex h-full flex-col justify-between overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800"
+            class="cyber-card flex h-full flex-col justify-between overflow-hidden rounded-xl"
           >
             <div class="flex h-full flex-col gap-1 p-4 pb-0">
-              <h2 class="text-xl font-bold">Organize</h2>
-              <p>Create folders and organize your code snippets in a structured way.</p>
+              <h2 class="text-xl font-bold text-cyber-green">Organize</h2>
+              <p class="text-text-secondary">Create folders and organize your code snippets in a structured way.</p>
             </div>
             <div class="flex w-full items-center justify-between gap-2 p-2 px-5">
               <FolderCard
@@ -104,19 +104,19 @@ await client.createPaste({
         </div>
         <div class="mb-3 flex flex-col gap-3 md:grid md:h-[18rem] md:grid-cols-[1fr_2fr]">
           <div
-            class="flex h-full flex-col justify-between overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800"
+            class="cyber-card flex h-full flex-col justify-between overflow-hidden rounded-xl"
           >
             <div class="flex h-full flex-col gap-1 p-4 pb-0">
-              <h2 class="text-xl font-bold">Keep secret</h2>
-              <p>
+              <h2 class="text-xl font-bold text-cyber-purple">Keep secret</h2>
+              <p class="text-text-secondary">
                 Use client encryption to keep your code snippets secret. Even we can't read your
                 encrypted pastes.
               </p>
             </div>
             <div class="flex w-full flex-col items-center justify-between gap-2 p-2">
-              <i class="ti ti-lock text-3xl" />
+              <i class="ti ti-lock text-3xl text-cyber-purple" />
               <div
-                class="mono w-full rounded-lg border border-neutral-300 p-2 text-center dark:border-neutral-600"
+                class="mono w-full rounded-lg border border-cyber-purple p-2 text-center shadow-neon-purple"
               >
                 * * * * * *
               </div>
@@ -124,12 +124,12 @@ await client.createPaste({
           </div>
 
           <div
-            class="h-full items-start overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 md:grid md:grid-cols-2 dark:border-neutral-700 dark:bg-neutral-800"
+            class="cyber-card h-full items-start overflow-hidden rounded-xl md:grid md:grid-cols-2"
           >
             <div class="flex h-full flex-col justify-between gap-3 p-4">
               <div class="flex-col gap-3">
-                <h2 class="text-xl font-bold">Integration</h2>
-                <p>
+                <h2 class="text-xl font-bold text-cyber-yellow">Integration</h2>
+                <p class="text-text-secondary">
                   Use our API to integrate Pastefy with your applications or simply embed your paste
                   into your own website easily.
                 </p>
@@ -150,7 +150,7 @@ await client.createPaste({
             </div>
             <div class="h-full overflow-hidden">
               <div
-                class="h-full border-t border-neutral-300 md:border-t-0 md:border-l dark:border-neutral-700"
+                class="h-full border-t border-cyber-blue md:border-t-0 md:border-l"
               >
                 <Highlighted hide-divider :contents="exampleIntegrationCode" file-name=".js" />
               </div>
@@ -160,10 +160,10 @@ await client.createPaste({
 
         <div
           v-if="appInfo.appInfo?.public_pastes_enabled"
-          class="flex h-full flex-col items-center gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 p-3 dark:border-neutral-700 dark:bg-neutral-800"
+          class="cyber-card flex h-full flex-col items-center gap-3 overflow-hidden rounded-xl p-3"
         >
-          <i class="ti ti-world text-4xl" />
-          <h2 class="text-lg font-bold">Explore Public Pastes</h2>
+          <i class="ti ti-world text-4xl text-cyber-blue" />
+          <h2 class="text-lg font-bold text-cyber-blue">Explore Public Pastes</h2>
 
           <Button
             as="router-link"

@@ -1,42 +1,34 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Dates;
-import org.javawebstack.orm.annotation.Table;
+import org.javawebstack.orm.Repo;
+import org.javawebstack.orm.annotation.*;
 import org.javawebstack.webutils.util.RandomUtil;
-
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * PasteBranch - Supports branching in version control
- * Part of the Version Control System feature
- */
 @Dates
 @Table("paste_branches")
 public class PasteBranch extends Model {
-
     @Column(size = 8)
     private String id;
 
     @Column(size = 8)
+    @Filterable
     private String pasteId;
 
+    @Column(size = 100)
+    @Filterable
+    private String name;
+
     @Column(size = 8)
-    private String userId;
+    private String headRevisionId;
 
     @Column
-    private String branchName;
+    private Boolean isDefault = false;
 
     @Column(size = 8)
-    private String baseRevisionId;
-
-    @Column(size = 8)
-    private String latestRevisionId;
-
-    @Column
-    private boolean isDefault;
+    private String createdBy;
 
     @Column
     private Timestamp createdAt;
@@ -45,77 +37,50 @@ public class PasteBranch extends Model {
     private Timestamp updatedAt;
 
     public PasteBranch() {
-        this.id = RandomUtil.string(8);
-        this.createdAt = Timestamp.from(Instant.now());
+        id = RandomUtil.string(8);
+        createdAt = Timestamp.from(Instant.now());
+        updatedAt = Timestamp.from(Instant.now());
+    }
+
+    public static PasteBranch get(String branchId) {
+        return Repo.get(PasteBranch.class).where("id", branchId).first();
+    }
+
+    // Getters and setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getPasteId() { return pasteId; }
+    public void setPasteId(String pasteId) { this.pasteId = pasteId; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getHeadRevisionId() { return headRevisionId; }
+    public void setHeadRevisionId(String headRevisionId) {
+        this.headRevisionId = headRevisionId;
         this.updatedAt = Timestamp.from(Instant.now());
-        this.isDefault = false;
     }
 
-    public String getId() {
-        return id;
+    public Boolean getIsDefault() { return isDefault != null && isDefault; }
+    public void setIsDefault(Boolean isDefault) { this.isDefault = isDefault; }
+
+    public String getCreatedBy() { return createdBy; }
+    public void setCreatedBy(String createdBy) { this.createdBy = createdBy; }
+
+    public Timestamp getCreatedAt() { return createdAt; }
+    public Timestamp getUpdatedAt() { return updatedAt; }
+
+    public Paste getPaste() {
+        return Paste.get(pasteId);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public PasteRevision getHeadRevision() {
+        if (headRevisionId == null) return null;
+        return PasteRevision.get(headRevisionId);
     }
 
-    public String getPasteId() {
-        return pasteId;
-    }
-
-    public void setPasteId(String pasteId) {
-        this.pasteId = pasteId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getBranchName() {
-        return branchName;
-    }
-
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
-    }
-
-    public String getBaseRevisionId() {
-        return baseRevisionId;
-    }
-
-    public void setBaseRevisionId(String baseRevisionId) {
-        this.baseRevisionId = baseRevisionId;
-    }
-
-    public String getLatestRevisionId() {
-        return latestRevisionId;
-    }
-
-    public void setLatestRevisionId(String latestRevisionId) {
-        this.latestRevisionId = latestRevisionId;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public User getCreator() {
+        return User.get(createdBy);
     }
 }

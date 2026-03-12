@@ -531,6 +531,9 @@ public class Pastely {
 
         passport.createRoutes(httpRouter);
 
+        // WebSocket endpoint for real-time collaboration
+        httpRouter.ws("/ws/collaborate/{pasteKey}", new cc.allyapps.pastely.websocket.CollaborationWebSocket());
+
         getBackendPlugins().forEach(PastelyBackendPlugin::beforeRoutes);
 
         httpRouter.get("/assets/{*:path}", e -> {

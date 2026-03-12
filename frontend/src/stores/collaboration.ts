@@ -81,19 +81,17 @@ export const useCollaborationStore = defineStore('collaboration', () => {
     }
   }
 
-  function connectWebSocket(sessionId: string) {
-    // Note: WebSocket implementation would be added based on server configuration
-    // This is a placeholder for the WebSocket connection logic
+  function connectWebSocket(pasteKey: string, token: string) {
     disconnect()
 
     const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-    const wsUrl = `${wsProtocol}//${window.location.host}/ws/collaboration/${sessionId}`
+    const wsUrl = `${wsProtocol}//${window.location.host}/ws/collaborate/${pasteKey}?token=${token}`
 
     ws = new WebSocket(wsUrl)
 
     ws.onopen = () => {
       connected.value = true
-      console.log('WebSocket connected')
+      console.log('WebSocket connected to paste:', pasteKey)
     }
 
     ws.onmessage = (event) => {
@@ -110,6 +108,8 @@ export const useCollaborationStore = defineStore('collaboration', () => {
       connected.value = false
       console.log('WebSocket disconnected')
     }
+
+    return ws
   }
 
   function disconnect() {
@@ -120,17 +120,100 @@ export const useCollaborationStore = defineStore('collaboration', () => {
     connected.value = false
   }
 
-  function handleWebSocketMessage(data: any) {
-    if (data.type === 'cursor') {
-      const cursorIndex = cursors.value.findIndex((c) => c.userId === data.userId)
-      if (cursorIndex >= 0) {
-        cursors.value[cursorIndex] = data.cursor
-      } else {
-        cursors.value.push(data.cursor)
-      }
-    } else if (data.type === 'leave') {
-      cursors.value = cursors.value.filter((c) => c.userId !== data.userId)
+  function handleWebSocketMessage(message: any) {
+    const { type, data } = message
+
+    switch (type) {
+      case 'init':
+        // Initial state received
+        if (data.cursors) {
+          cursors.value = data.cursors
+        }
+        break
+
+      case 'cursor':
+        // Update cursor position
+        if (data.userId) {
+          const cursorIndex = cursors.value.findIndex((c: any) => c.userId === data.userId)
+          if (cursorIndex >= 0) {
+            cursors.value[cursorIndex] = data
+          } else {
+            cursors.value.push(data)
+          }
+        }
+        break
+
+      case 'user_joined':
+        console.log('User joined:', data.userName)
+        break
+
+      case 'user_left':
+        console.log('User left:', data.userName)
+        cursors.value = cursors.value.filter((c: any) => c.userId !== data.userId)
+        break
+
+      case 'edit':
+        // Edit operation - handled by parent component
+        break
+
+      case 'typing':
+        // Typing indicator - handled by parent component
+        break
+
+      case 'error':
+        console.error('WebSocket error:', data.message)
+        break
     }
+  }
+
+  function sendEdit(position: number, text: string, type: 'insert' | 'delete', length: number = 0) {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      console.error('WebSocket not connected')
+      return
+    }
+
+    const message = {
+      type: 'edit',
+      data: {
+        position,
+        text,
+        type,
+        length
+      }
+    }
+
+    ws.send(JSON.stringify(message))
+  }
+
+  function sendCursor(line: number, column: number) {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      return
+    }
+
+    const message = {
+      type: 'cursor',
+      data: {
+        line,
+        column
+      }
+    }
+
+    ws.send(JSON.stringify(message))
+  }
+
+  function sendTyping(isTyping: boolean) {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      return
+    }
+
+    const message = {
+      type: 'typing',
+      data: {
+        isTyping
+      }
+    }
+
+    ws.send(JSON.stringify(message))
   }
 
   function reset() {
@@ -151,6 +234,9 @@ export const useCollaborationStore = defineStore('collaboration', () => {
     closeSession,
     connectWebSocket,
     disconnect,
+    sendEdit,
+    sendCursor,
+    sendTyping,
     reset
   }
 })

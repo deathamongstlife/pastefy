@@ -125,6 +125,17 @@ const router = createRouter({
         },
 
         {
+          path: '/paste/:id/history',
+          name: 'paste-history',
+          component: () => import('@/views/paste/HistoryView.vue'),
+        },
+        {
+          path: '/paste/:id/revision/:revisionId',
+          name: 'paste-revision',
+          component: () => import('@/views/paste/RevisionView.vue'),
+        },
+
+        {
           path: '/:paste',
           name: 'paste',
           component: () => import('@/views/PasteView.vue'),
