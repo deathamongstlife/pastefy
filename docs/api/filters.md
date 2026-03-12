@@ -1,6 +1,6 @@
-# Pastefy API Filters
+# pastely API Filters
 
-Pastefy supports **powerful filtering** for pastes, folders, and other resources. Filters allow you to query specific content using **logical operators** and **field operators**.
+pastely supports **powerful filtering** for pastes, folders, and other resources. Filters allow you to query specific content using **logical operators** and **field operators**.
 
 Start with **examples**, then learn the syntax and operators.
 
@@ -29,7 +29,7 @@ GET /paste?filters={"$or":[{"visibility":"PUBLIC"},{"userId":{"$ne":"123"}}]}
 ### JavaScript Client Example
 
 ```javascript
-const pastes = await pastefy.getPastes({
+const pastes = await pastely.getPastes({
     filters: {
         $or: [
             {'visibility': 'PUBLIC'},
@@ -78,7 +78,7 @@ const pastes = await pastefy.getPastes({
 ### Multiple Conditions (`$and`)
 
 ```javascript
-pastefy.getPastes({
+pastely.getPastes({
     filters: {
         $and: [
             { visibility: "PUBLIC" },
@@ -93,7 +93,7 @@ pastefy.getPastes({
 ### Alternatives (`$or`)
 
 ```javascript
-pastefy.getPastes({
+pastely.getPastes({
     $or: [
         { visibility: "PUBLIC" },
         { visibility: "PRIVATE" }
@@ -106,7 +106,7 @@ pastefy.getPastes({
 ### Nested Logic
 
 ```javascript
-pastefy.getPastes({
+pastely.getPastes({
     filters: {
         $and: [
             { visibility: "PUBLIC" },

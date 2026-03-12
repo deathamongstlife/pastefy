@@ -1,6 +1,6 @@
-# CLAUDE.md - Pastefy Coding Standards
+# CLAUDE.md - Pastely Coding Standards
 
-This document defines the coding standards, conventions, and architectural patterns for the Pastefy project.
+This document defines the coding standards, conventions, and architectural patterns for the Pastely project.
 
 ## Project Overview
 
@@ -59,8 +59,8 @@ public class ResourceController extends HttpController {
 #### Package Structure
 
 ```
-de.interaapps.pastefy/
-├── Pastefy.java               # Main singleton class
+de.interaapps.pastely/
+├── Pastely.java               # Main singleton class
 ├── auth/                      # Authentication & OAuth2
 │   ├── *Middleware.java       # Middleware classes
 │   ├── Passport.java          # Auth orchestration
@@ -125,7 +125,7 @@ public class Resource extends Model {
         super.save();
 
         // Async operations
-        Pastefy.getInstance().executeAsync(() -> {
+        Pastely.getInstance().executeAsync(() -> {
             ElasticResource.store(this);
         });
     }
@@ -136,7 +136,7 @@ public class Resource extends Model {
         Repo.get(RelatedModel.class).where("resourceId", id).delete();
 
         // Async cleanup
-        Pastefy.getInstance().executeAsync(() -> {
+        Pastely.getInstance().executeAsync(() -> {
             ElasticResource.delete(this);
         });
 
@@ -192,13 +192,13 @@ User user = User.get(userId);
 ```java
 // ORM setup with table prefix
 ORMConfig ormConfig = new ORMConfig()
-    .setTablePrefix("pastefy_")
+    .setTablePrefix("pastely_")
     .addTypeMapper(new AbstractDataTypeMapper());
 
 ORM.register(Resource.class.getPackage(), sqlPool, ormConfig);
 
 // Auto-migration
-if (config.get("pastefy.automigrate", "true").equals("true")) {
+if (config.get("pastely.automigrate", "true").equals("true")) {
     ORM.autoMigrate();
 }
 
@@ -319,7 +319,7 @@ public class AuthMiddleware implements RequestHandler {
 #### Middleware Registration
 
 ```java
-// In Pastefy.setupServer()
+// In Pastely.setupServer()
 httpRouter.middleware("auth", new AuthMiddleware());
 httpRouter.middleware("admin", new AdminMiddleware());
 httpRouter.middleware("awaiting-access", new AwaitingAccessMiddleware());
@@ -483,7 +483,7 @@ int port = config.getInt("http.server.port", 80);
 boolean hasRedis = config.has("redis.host");
 
 // Feature flags
-boolean loginRequired = config.get("pastefy.loginrequired", "false").equals("true");
+boolean loginRequired = config.get("pastely.loginrequired", "false").equals("true");
 ```
 
 ### Async Operations
@@ -496,7 +496,7 @@ public void executeAsync(Runnable task) {
 }
 
 // Usage - async operations for heavy tasks
-Pastefy.getInstance().executeAsync(() -> {
+Pastely.getInstance().executeAsync(() -> {
     ElasticPaste.store(this);
     PublicPasteEngagement.updateScore(paste);
 });
@@ -1213,16 +1213,16 @@ Closes #123
 
 ### Backend Plugins
 ```java
-public interface PastefyBackendPlugin {
-    void onLoad(Pastefy pastefy);
+public abstract class PastelyBackendPlugin {
+    PastelyBackendPlugin(Pastely pastely) {}
     void setupRoutes(HTTPRouter router);
 }
 ```
 
 ### Frontend Plugins
 ```typescript
-// Exposed via window.pastefy
-window.pastefy = {
+// Exposed via window.pastely
+window.pastely = {
   app: VueApp,
   router: Router,
   client: AxiosInstance,

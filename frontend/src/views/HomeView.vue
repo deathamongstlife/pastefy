@@ -26,7 +26,7 @@ const exampleIntegrationCode = `import { PastefyClient }
     from '@interaapps/pastefy';
 
 const client
-  = new PastefyClient(apiKey${window.location.origin !== 'https://pastefy.app' ? `, "${window.location.origin}"` : ''});
+  = new PastefyClient(apiKey${window.location.origin !== 'https://pastely.app' ? `, "${window.location.origin}"` : ''});
 
 console.log(
   await client.getPaste('id')
@@ -139,7 +139,7 @@ await client.createPaste({
                 <Button
                   as="a"
                   icon="ti ti-book"
-                  href="https://docs.pastefy.app/api/"
+                  href="https://docs.pastely.app/api/"
                   target="_blank"
                   label="api docs"
                   size="small"

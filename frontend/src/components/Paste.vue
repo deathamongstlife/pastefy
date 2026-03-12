@@ -302,7 +302,7 @@ const showPreview = ref(true)
             v-if="paste.tags?.includes('codebox')"
             target="_blank"
             as="a"
-            :href="`https://box.pastefy.app/${paste.id}`"
+            :href="`https://box.pastely.app/${paste.id}`"
             severity="contrast"
             text
             rounded
@@ -491,7 +491,7 @@ const showPreview = ref(true)
               class="flex overflow-auto border-t border-neutral-200 p-0.5 dark:border-neutral-700"
             >
               <Button
-                label="view on pastefy"
+                label="view on pastely"
                 as="a"
                 :href="`${origin}/${paste.id}`"
                 target="_blank"

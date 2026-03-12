@@ -8,8 +8,8 @@ const sidebar = useSidebar({
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Pastefy Docs",
-  description: "Pastefy Docs",
+  title: "pastely Docs",
+  description: "pastely Docs",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -17,7 +17,7 @@ export default defineConfig({
       { text: 'Features', link: '/features/index' },
       { text: 'Self-Hosting', link: '/self-hosting/index' },
       { text: 'InteraApps', link: 'https://interaapps.de' },
-      { text: 'Pastefy', link: 'https://pastefy.app' },
+      { text: 'pastely', link: 'https://pastely.app' },
     ],
 
     sidebar: {
@@ -61,7 +61,7 @@ export default defineConfig({
           text: 'General',
           items: [
             { text: 'Introduction', link: '/api/index.md' },
-            { text: 'Integrating Pastefy with OAuth2', link: '/api/oauth.md' },
+            { text: 'Integrating pastely with OAuth2', link: '/api/oauth.md' },
             { text: 'Filtering', link: '/api/filters.md' }
           ]
         },
@@ -83,7 +83,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/interaapps/pastefy' }
+      { icon: 'github', link: 'https://github.com/interaapps/pastely' }
     ]
   }
 })

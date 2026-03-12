@@ -1,6 +1,6 @@
 # OAuth / Login Providers
 
-Pastefy supports multiple login providers using OAuth2. You can configure one or more providers to allow users to log in and manage their pastes.
+pastely supports multiple login providers using OAuth2. You can configure one or more providers to allow users to log in and manage their pastes.
 
 ---
 
@@ -42,9 +42,9 @@ OAUTH2_GOOGLE_CLIENT_ID=your-google-client-id
 OAUTH2_GOOGLE_CLIENT_SECRET=your-google-client-secret
 ```
 
-> Make sure the redirect URL matches your Pastefy URL:
-> `https://pastefy.app/api/v2/auth/oauth2/{provider,lowercase}/callback`
-> For example: `https://pastefy.app/api/v2/auth/oauth2/google/callback`
+> Make sure the redirect URL matches your pastely URL:
+> `https://pastely.app/api/v2/auth/oauth2/{provider,lowercase}/callback`
+> For example: `https://pastely.app/api/v2/auth/oauth2/google/callback`
 
 ---
 
@@ -78,13 +78,13 @@ PASTEFY_LOGIN_REQUIRED_READ=false     # Require login to view pastes / raw mode
 ```
 
 * Set `true` to enforce login where needed.
-* Useful if you want a private Pastefy instance.
+* Useful if you want a private pastely instance.
 
 ---
 
 ## **5. Testing OAuth Setup**
 
-1. Start Pastefy with your environment variables configured.
+1. Start pastely with your environment variables configured.
 2. Open your instance and click **Log In**.
 3. Select your provider.
 4. Verify login works and that you can create/view pastes.

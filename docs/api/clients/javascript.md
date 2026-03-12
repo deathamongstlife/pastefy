@@ -1,11 +1,11 @@
-# Pastefy JavaScript/Typescript Client
+# pastely JavaScript/Typescript Client
 
-A TypeScript/JavaScript client for interacting with the [Pastefy.app](https://pastefy.app) API (v2). Access pastes, folders, tags, users, and more with full TypeScript typing.
+A TypeScript/JavaScript client for interacting with the [pastely.app](https://pastely.app) API (v2). Access pastes, folders, tags, users, and more with full TypeScript typing.
 
 ## 🚀 Installation
 
 ```bash
-npm install @interaapps/pastefy
+npm install @interaapps/pastely
 ```
 
 
@@ -16,7 +16,7 @@ npm install @interaapps/pastefy
 <ClientTab title="JavaScript" lang="javascript">
 
 ```javascript
-import { PastefyClient } from '@interaapps/pastefy';
+import { PastefyClient } from '@interaapps/pastely';
 
 const client = new PastefyClient('YOUR_API_TOKEN');
 
@@ -38,13 +38,13 @@ console.log(newPaste.id);
 <ClientTab title="TypeScript" lang="ts">
 
 ```ts
-import { PastefyClient, CreatePasteRequest } from '@interaapps/pastefy';
+import { PastefyClient, CreatePasteRequest } from '@interaapps/pastely';
 
 const client = new PastefyClient('YOUR_API_TOKEN');
 
 const paste: CreatePasteRequest = {
   title: 'Hello TypeScript',
-  content: 'Pastefy TS client',
+  content: 'pastely TS client',
   visibility: 'UNLISTED',
 };
 
@@ -190,12 +190,12 @@ try {
 ```javascript
 const paste = await client.createPaste({
   title: 'My First Paste',
-  content: 'Welcome to Pastefy!',
+  content: 'Welcome to pastely!',
   visibility: 'UNLISTED',
   tags: ['welcome', 'test'],
 });
 
-console.log(`Paste created at: https://pastefy.app/${paste.id}`);
+console.log(`Paste created at: https://pastely.app/${paste.id}`);
 
 const fetched = await client.getPaste(paste.id);
 console.log(fetched.content);
@@ -205,4 +205,4 @@ console.log(fetched.content);
 
 
 ## Inofficial clients
-- [Unofficial JavaScript client for Pastefy API by dxkyy](https://github.com/dxkyy/pastefy-api)
+- [Unofficial JavaScript client for pastely API by dxkyy](https://github.com/dxkyy/pastely-api)

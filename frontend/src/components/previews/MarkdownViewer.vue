@@ -8,9 +8,9 @@ const props = defineProps<{
 }>()
 
 const useMermaidViewer = () => {
-  if (customElements.get('pastefy-mermaid-viewer')) return
+  if (customElements.get('pastely-mermaid-viewer')) return
   customElements.define(
-    'pastefy-mermaid-viewer',
+    'pastely-mermaid-viewer',
     defineCustomElement(
       defineAsyncComponent(() => import('@/components/previews/MermaidViewer.vue')),
       {
@@ -32,17 +32,17 @@ const md = markdownit({
 
     if (lang === 'mermaid' || lang === 'mmd') {
       useMermaidViewer()
-      const pastefyMermaid = document.createElement('pastefy-mermaid-viewer')
-      pastefyMermaid.setAttribute('mermaid-code', str?.trim() || '')
+      const pastelyMermaid = document.createElement('pastely-mermaid-viewer')
+      pastelyMermaid.setAttribute('mermaid-code', str?.trim() || '')
       container.appendChild(pastefyMermaid)
       return container.outerHTML
     }
 
-    const pastefyHighlighted = document.createElement('pastefy-highlighted')
+    const pastelyHighlighted = document.createElement('pastely-highlighted')
 
-    pastefyHighlighted.setAttribute('language', `.${lang}`)
-    pastefyHighlighted.setAttribute('contents', str?.trim() || '')
-    pastefyHighlighted.setAttribute('show-copy-button', 'true')
+    pastelyHighlighted.setAttribute('language', `.${lang}`)
+    pastelyHighlighted.setAttribute('contents', str?.trim() || '')
+    pastelyHighlighted.setAttribute('show-copy-button', 'true')
 
     container.appendChild(pastefyHighlighted)
     return container.outerHTML

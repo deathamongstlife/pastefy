@@ -1,27 +1,27 @@
-# Pastefy API
+# pastely API
 
-The **Pastefy API** allows you to programmatically access and manage content on [Pastefy.app](https://pastefy.app). With the API, you can create, edit, fetch, and delete pastes, manage folders and tags, and interact with user accounts securely.
+The **pastely API** allows you to programmatically access and manage content on [pastely.app](https://pastely.app). With the API, you can create, edit, fetch, and delete pastes, manage folders and tags, and interact with user accounts securely.
 
 ## 🌐 Base URL
 
 All API requests use the following base URL:
 
 ```
-https://pastefy.app/api/v2
+https://pastely.app/api/v2
 ```
 
-When self-hosted, replace `pastefy.app` with your instance's domain.
+When self-hosted, replace `pastely.app` with your instance's domain.
 
 
 ## 🔑 Authentication
 
 Most endpoints require authentication via an **API token**. Pass the token using the `Authorization: Bearer <token>` header.
 
-Get api key here: [https://pastefy.app/apikeys](https://pastefy.app/apikeys)
+Get api key here: [https://pastely.app/apikeys](https://pastely.app/apikeys)
 
 ```http
 GET /api/... HTTP/1.1
-Host: pastefy.app
+Host: pastely.app
 Authorization: Bearer YOUR_API_TOKEN
 ```
 
@@ -55,7 +55,7 @@ BUT that might change in the future for some endpoints specifically.
 
 ## 📚 Documentation
 
-For detailed API usage, endpoints, and examples, visit the **Pastefy Client Documentation**:
+For detailed API usage, endpoints, and examples, visit the **pastely Client Documentation**:
 
 * [JavaScript Client](/api/clients/javascript.md)
 * [Java Clients](/api/clients/java.md)

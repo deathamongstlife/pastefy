@@ -1,17 +1,17 @@
-# Pastefy Active Pieces Integration
+# pastely Active Pieces Integration
 
-**Activepieces** lets you connect Pastefy with the most popular apps, so you can automate your work and have more time for what matters most — no code required.
+**Activepieces** lets you connect pastely with the most popular apps, so you can automate your work and have more time for what matters most — no code required.
 
-[More on it on the Activepieces page](https://www.activepieces.com/pieces/pastefy)
+[More on it on the Activepieces page](https://www.activepieces.com/pieces/pastely)
 
-## Pastefy Triggers
+## pastely Triggers
 
 - **Paste Changed**  
   Triggers when the content (or title) of the paste changes.
 
 ---
 
-## Pastefy Actions
+## pastely Actions
 
 - **Create Paste**  
   Creates a new paste.

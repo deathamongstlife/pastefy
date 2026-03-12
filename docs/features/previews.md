@@ -26,15 +26,15 @@ watch(iframe, () => {
 
 <br>
 
-<iframe ref="iframe" class="paste" src="https://pastefy.app/LyyRgxA4/embed?hideActions=true" style="width: 700px; border: none; border-radius: 11px"></iframe>
+<iframe ref="iframe" class="paste" src="https://pastely.app/LyyRgxA4/embed?hideActions=true" style="width: 700px; border: none; border-radius: 11px"></iframe>
 
 
-Pastefy goes beyond plain text — it automatically detects and renders **rich previews** for many file types.  
+pastely goes beyond plain text — it automatically detects and renders **rich previews** for many file types.  
 This makes it easy to visualize your data, diagrams, and formatted content directly in the browser.
 
 ## ✨ Supported Formats
 
-Here’s what Pastefy can currently preview:
+Here’s what pastely can currently preview:
 
 | Format | Description |
 |:--|:--|
@@ -49,11 +49,11 @@ Here’s what Pastefy can currently preview:
 | **Asciinema (.cast)** | Embeds and plays terminal recordings interactively. |
 
 🧠 **Example:** You can see several of these in action on  
-👉 [https://pastefy.app/EByZpNoS](https://pastefy.app/EByZpNoS)
+👉 [https://pastely.app/EByZpNoS](https://pastely.app/EByZpNoS)
 
 ## 💡 How It Works
 
-Pastefy automatically detects the file type by the **file extension**, or
+pastely automatically detects the file type by the **file extension**, or
 
 When a supported format is detected, the paste view switches to an appropriate **interactive renderer**, allowing you to explore or visualize your data right in the browser — no extra setup required.
 
@@ -61,4 +61,4 @@ When a supported format is detected, the paste view switches to an appropriate *
 - Raw mode is still available — just click the **"Raw"** button on any paste.
 
 
-With Pastefy’s previews, your code, diagrams, and data become **instantly shareable and readable** — no external tools needed.
+With pastely’s previews, your code, diagrams, and data become **instantly shareable and readable** — no external tools needed.

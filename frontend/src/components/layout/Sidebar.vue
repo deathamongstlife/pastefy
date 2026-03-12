@@ -77,7 +77,7 @@ const appStore = useAppStore()
           <Button
             as="a"
             target="_blank"
-            href="https://github.com/interaapps/pastefy"
+            href="https://github.com/interaapps/pastely"
             icon="ti ti-brand-github text-xl"
             text
             severity="contrast"

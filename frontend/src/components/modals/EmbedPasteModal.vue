@@ -24,11 +24,11 @@ const settingsQuery = computed(() => {
   return Object.keys(query).length ? '?' + new URLSearchParams(query).toString() : ''
 })
 const embedCode = computed(
-  () => `<div id="pastefy"></div>
+  () => `<div id="pastely"></div>
 ${'<'}script type="module">
-  import { embedPastefy } from '${origin}/embed.js'
-  embedPastefy(document.getElementById('pastefy'), 'P3fKIHq3'${
-    origin !== 'https://pastefy.app'
+  import { embedPastely } from '${origin}/embed.js'
+  embedPastely(document.getElementById('pastely'), 'P3fKIHq3'${
+    origin !== 'https://pastely.app'
       ? `, ${JSON.stringify({
           hideTitle: hideTitle.value || undefined,
           hideActions: hideActions.value || undefined,

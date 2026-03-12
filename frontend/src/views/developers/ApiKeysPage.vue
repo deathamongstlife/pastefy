@@ -15,7 +15,7 @@ import TabPanel from 'primevue/tabpanel'
 import Tab from 'primevue/tab'
 import { useCurrentUserStore } from '@/stores/current-user.ts'
 
-useTitle('Api-Keys | pastefy')
+useTitle('Api-Keys | Pastely')
 
 const toast = useToast()
 
@@ -82,10 +82,10 @@ const clipboard = useClipboard()
     >
       <TabList :pt="{ root: 'bg-transparent', tabList: 'bg-transparent' }">
         <Tab value="apikeys">Api Keys</Tab>
-        <Tab as="a" href="https://docs.pastefy.app/api/" value="apidocs"> API Docs </Tab>
+        <Tab as="a" href="https://docs.pastely.app/api/" value="apidocs"> API Docs </Tab>
         <Tab
           as="a"
-          href="https://docs.pastefy.app/api/oauth.html"
+          href="https://docs.pastely.app/api/oauth.html"
           value="oauth2apps"
           v-if="currentUserStore.user?.auth_types?.includes('interaapps')"
         >
@@ -132,7 +132,7 @@ const clipboard = useClipboard()
             <div class="flex justify-end gap-1">
               <Button
                 as="a"
-                href="https://docs.pastefy.app"
+                href="https://docs.pastely.app"
                 target="_blank"
                 label="api-docs"
                 text

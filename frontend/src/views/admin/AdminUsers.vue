@@ -9,7 +9,7 @@ import { ref } from 'vue'
 import Pagination from '@/components/Pagination.vue'
 import { useConfirm } from 'primevue/useconfirm'
 
-useTitle('Users - Admin | pastefy')
+useTitle('Users - Admin | Pastely')
 
 type UserAsAdmin = {
   auth_id: string

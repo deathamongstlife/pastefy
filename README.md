@@ -24,21 +24,21 @@ This is a **massive enhancement** with 150+ new features across 18 categories:
 - **Code Templates** - Reusable templates with categories
 - And much more!
 
-Try out the public instance https://pastefy.app <br>
-Visit the docs for everything around Pastely here: https://docs.pastefy.app
+Try out the public instance https://pastely.app <br>
+Visit the docs for everything around Pastely here: https://docs.pastely.app
 
 ## Core Features
 
 ### Classic Features
 - Raw-Preview & Copy Button
 - Fork & Star pastes
-- Comprehensive API ([Docs](https://docs.pastefy.app/api/))
+- Comprehensive API ([Docs](https://docs.pastely.app/api/))
   - [Javascript/Typescript](https://github.com/interaapps/js-api-clients?tab=readme-ov-file#pastefy)
-  - [Java](https://github.com/interaapps/pastefy-java-apiclient)
-  - [Go](https://github.com/interaapps/pastefy-go-api)
+  - [Java](https://github.com/interaapps/pastely-java-apiclient)
+  - [Go](https://github.com/interaapps/pastely-go-api)
 - OAuth2 Login (InteraApps, Google, GitHub, Discord, Twitch)
 - Folder organization
-- CLI upload: `curl -F f=@file.txt pastefy.app`
+- CLI upload: `curl -F f=@file.txt pastely.app`
 - Extensions: VS-Code, Raycast
 - Rich Previews: Markdown, Mermaid, SVG, CSV, GeoJSON, Diff, Calendar, Regex, Asciinema
 
@@ -104,12 +104,12 @@ Visit the docs for everything around Pastely here: https://docs.pastefy.app
 # Overview
 - [Screenshots](#Screenshots)
 - Deploy
-  - [Docker](https://docs.pastefy.app/self-hosting/installation/docker.html)
-  - [Docker-Compose](https://docs.pastefy.app/self-hosting/installation/docker-compose.html)
+  - [Docker](https://docs.pastely.app/self-hosting/installation/docker.html)
+  - [Docker-Compose](https://docs.pastely.app/self-hosting/installation/docker-compose.html)
   - [Container-Less](#Container-Less)
-- [Configuration](https://docs.pastefy.app/self-hosting/configuration.html)
+- [Configuration](https://docs.pastely.app/self-hosting/configuration.html)
 - [Develop](#Develop)
-- [API](https://docs.pastefy.app/api/)
+- [API](https://docs.pastely.app/api/)
 
 # Screenshots
 <img src="./.github/screenshots/home.png" width="46%" >
@@ -119,11 +119,11 @@ Visit the docs for everything around Pastely here: https://docs.pastefy.app
 
 ## Deploy
 
-See [Self-Hosting](https://docs.pastefy.app/self-hosting/index.html) for more options.
+See [Self-Hosting](https://docs.pastely.app/self-hosting/index.html) for more options.
 
 ### Container-Less
 ```bash
-git clone https://github.com/interaapps/pastefy.git
+git clone https://github.com/interaapps/pastely.git
 cd pastefy/frontend
 npm run install
 npm run build
@@ -137,7 +137,7 @@ java -jar backend/target/backend.jar
 Using intelliJ? Look at [Develop](#Develop)
 
 ## Configuration
-See [Configuration](https://docs.pastefy.app/self-hosting/configuration.html) for all options.
+See [Configuration](https://docs.pastely.app/self-hosting/configuration.html) for all options.
 ### Adding login
 You can choose between [INTERAAPPS](https://accounts.interaapps.de/developers) (best integration), [GOOGLE](https://support.google.com/cloud/answer/6158849?hl=en), [GITHUB](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app), [DISCORD](https://discord.com/developers/docs/topics/oauth2) or [TWITCH](https://dev.twitch.tv/docs/authentication) for the provider (You can use all of them at the same time).
 ```properties
@@ -179,29 +179,29 @@ npm run serve
 We are using IntelliJ Idea and Visual Studio code.
 
 ### API
-You can find the docs of the Pastefy-Rest-APi here: [Docs](https://docs.pastefy.app/api/)
+You can find the docs of the Pastefy-Rest-APi here: [Docs](https://docs.pastely.app/api/)
 
 
 ## Administration
-If you want to give yourself the admin role, you have to log into your MySQL server and set `type` on your account to `ADMIN` in the `pastefy_users` table.
+If you want to give yourself the admin role, you have to log into your MySQL server and set `type` on your account to `ADMIN` in the `pastely_users` table.
 
 You'll find the admin panel under `https://YOUR_URL/admin`
 
 
 ## Extra Features
 
-Read more here [Docs](https://docs.pastefy.app/features/index.html)
+Read more here [Docs](https://docs.pastely.app/features/index.html)
 
 ### Upload via Curl
 ```bash
-curl -F f=@file.txt pastefy.app
+curl -F f=@file.txt pastely.app
 ```
 ### Asciinema support
 
 configure: `nano ~/.config/asciinema/config`
 ```
 [api]
-url = https://pastefy.app
+url = https://pastely.app
 ```
 
 Using asciinema

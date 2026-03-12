@@ -2,7 +2,7 @@
 
 ## File structure
 ```
-- pastefy-app.jar
+- pastely-app.jar
 - .env
 ...
 - plugins/
@@ -31,12 +31,12 @@
 
 ## Plain Frontend
 ```js
-const pastefy = window.pastefy;
-const { h } = pastefy.vueFunctions
+const pastely = window.pastely;
+const { h } = pastely.vueFunctions
 
-pastefy.createPlugin('my-plugin', {
+pastely.createPlugin('my-plugin', {
     async init() {
-        pastefy.componentInjections.registerInjection('paste-below-title', ({ value }) => {
+        pastely.componentInjections.registerInjection('paste-below-title', ({ value }) => {
             console.log(value.title)
             return h('div', { class: 'bar', innerHTML: 'hello' })
         })

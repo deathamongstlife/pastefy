@@ -1,4 +1,4 @@
-# Pastefy Backend
+# Pastely Backend
 
 # Minio & Elastic
 When MinIO is enabled, elastic search is used to index the files. 

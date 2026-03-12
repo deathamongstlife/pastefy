@@ -1,7 +1,7 @@
-# Integrating Pastefy with OAuth2
+# Integrating pastely with OAuth2
 
 ::: tip
-This tutorial is for the official public Pastefy instance at [pastefy.app](https://pastefy.app). 
+This tutorial is for the official public pastely instance at [pastely.app](https://pastely.app). 
 If you are selfhosting, this tutorial will not work, as this uses InteraApps' Token Exchange Service.
 :::
 
@@ -23,7 +23,7 @@ In production you should use the authorization code flow with PKCE.
 
 #### API Client Installation
 ```bash
-npm i @interaapps/accounts @interaapps/pastefy
+npm i @interaapps/accounts @interaapps/pastely
 ```
 
 #### Creating the Login Link
@@ -39,7 +39,7 @@ const redirectUri = oauthClient
     )
     .setResponseType('token')
     // Scope for reading and writing pastes and folders
-    .setScopes(['user:read', 'pastefy|pastes', 'pastefy|folders'])
+    .setScopes(['user:read', 'pastely|pastes', 'pastely|folders'])
     .build()
 
 window.location.href = redirectUri
@@ -53,12 +53,12 @@ const iaToken =
 
 const client = new AccountsClient(iaToken)
 
-// This is where we exchange the token for a Pastefy API Token
-const pastefyApiToken = await client.getKeyFor('pastefy')
+// This is where we exchange the token for a pastely API Token
+const pastefyApiToken = await client.getKeyFor('pastely')
 
-const pastefy = new PastefyClient(pastefyApiToken)
+const pastely = new PastefyClient(pastefyApiToken)
 
-console.log('User pastes:', await pastefy.getUserPastes())
+console.log('User pastes:', await pastely.getUserPastes())
 ```
 
 ::: info

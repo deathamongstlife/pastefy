@@ -58,7 +58,7 @@ emmet(CodeMirror)
 
 const cmOptions = ref({
   mode: 'javascript',
-  theme: 'pastefy',
+  theme: 'pastely',
   autofocus: true,
   autoCloseBrackets: true,
   autoCloseTags: true,

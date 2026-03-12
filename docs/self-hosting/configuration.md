@@ -1,6 +1,6 @@
 # `.env Configuration`
 
-Pastefy uses environment variables to configure backend settings, authentication, storage, and integrations. This guide lists all available `.env` variables, grouped by category, with descriptions and defaults.
+pastely uses environment variables to configure backend settings, authentication, storage, and integrations. This guide lists all available `.env` variables, grouped by category, with descriptions and defaults.
 
 ---
 
@@ -10,7 +10,7 @@ Pastefy uses environment variables to configure backend settings, authentication
 |--------------------|-----------------------------------------|----------------------|
 | `HTTP_SERVER_PORT` | Port the HTTP server listens on         | `80`                 |
 | `HTTP_SERVER_CORS` | Allowed CORS origins                    | `*`                  |
-| `SERVER_NAME`      | The public URL of your Pastefy instance | `http://example.com` |
+| `SERVER_NAME`      | The public URL of your pastely instance | `http://example.com` |
 
 ---
 
@@ -23,9 +23,9 @@ Currently only MySQL is supported.
 | Variable               | Description                             | Default / Notes |
 |------------------------|-----------------------------------------|-----------------|
 | `DATABASE_DRIVER`      | Database type (Currently only `mysql`)  | `mysql`         |
-| `DATABASE_NAME`        | Database name                           | `pastefy`       |
-| `DATABASE_USER`        | Database username                       | `pastefy`       |
-| `DATABASE_PASSWORD`    | Database password                       | `pastefy`       |
+| `DATABASE_NAME`        | Database name                           | `pastely`       |
+| `DATABASE_USER`        | Database username                       | `pastely`       |
+| `DATABASE_PASSWORD`    | Database password                       | `pastely`       |
 | `DATABASE_HOST`        | Database host                           | `localhost`     |
 | `DATABASE_PORT`        | Database port                           | `3306`          |
 | `PASTEFY_AUTOMIGRATE`  | Enable automatic DB migration           | `true`          |
@@ -46,7 +46,7 @@ Currently only MySQL is supported.
 ## **3. OAuth / Login Providers** (Optional)
 
 ::: tip
-You are not required to use a login provider. Pastefy can be used without login as well. 
+You are not required to use a login provider. pastely can be used without login as well. 
 And you can configure multiple providers at the same time if wanted.
 :::
 
@@ -70,7 +70,7 @@ And you can configure multiple providers at the same time if wanted.
 
 ---
 
-## **4. Pastefy Access & Features** (Optional)
+## **4. pastely Access & Features** (Optional)
 
 | Variable                        | Description                              | Default |
 |---------------------------------|------------------------------------------|---------|
@@ -101,13 +101,13 @@ And you can configure multiple providers at the same time if wanted.
 ## **6. MinIO / Object Storage** (Optional)
 
 ::: warning
-Pastefy does not auto migrate your database to use MinIO/S3. You need to set it up manually and migrate existing pastes if needed. Set up a pastefy instance with MinIO/S3 from the start to avoid migration if you plan to grow.
+pastely does not auto migrate your database to use MinIO/S3. You need to set it up manually and migrate existing pastes if needed. Set up a pastely instance with MinIO/S3 from the start to avoid migration if you plan to grow.
 :::
 
 | Variable           | Description                   | Examples                    |
 |--------------------|-------------------------------|-----------------------------|
 | `MINIO_SERVER`     | MinIO / S3 server URL         | `https://minio.example.com` |
-| `MINIO_BUCKET`     | Bucket name for Pastefy files | `pastefy`                   |
+| `MINIO_BUCKET`     | Bucket name for pastely files | `pastely`                   |
 | `MINIO_ACCESS_KEY` | Access key                    | `-`                         |
 | `MINIO_SECRET_KEY` | Secret key                    | `-`                         |
 ---
@@ -115,7 +115,7 @@ Pastefy does not auto migrate your database to use MinIO/S3. You need to set it 
 ## **7. Elasticsearch** (Optional)
 
 ::: warning
-Pastefy does not auto migrate your database to use Elasticsearch. You need to set it up manually and migrate existing pastes if needed. Set up a pastefy instance with Elasticsearch from the start to avoid migration if you plan to grow.
+pastely does not auto migrate your database to use Elasticsearch. You need to set it up manually and migrate existing pastes if needed. Set up a pastely instance with Elasticsearch from the start to avoid migration if you plan to grow.
 :::
 
 | Variable                 | Description                | Example                 |

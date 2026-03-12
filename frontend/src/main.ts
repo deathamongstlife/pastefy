@@ -36,7 +36,7 @@ import { useAppStore } from '@/stores/app.ts'
 
 declare global {
   interface Window {
-    pastefy: {
+    pastely: {
       app: VueApp
       router: Router
       appInfoStore: typeof appInfoStore
@@ -47,7 +47,9 @@ declare global {
       componentInjections: typeof componentInjections
       vueFunctions: typeof vueFunctions
     }
-    registerPastefyPlugin: { config: unknown; entrypoint: string }[]
+    // Backward compatibility alias
+    pastefy: Window['pastely']
+    registerPastelyPlugin: { config: unknown; entrypoint: string }[]
   }
 }
 
@@ -87,7 +89,7 @@ app.use(ConfirmationService)
 app.use(vue3Shortkey, { prevent: ['input', 'textarea'] })
 
 customElements.define(
-  'pastefy-highlighted',
+  'pastely-highlighted',
   defineCustomElement(
     defineAsyncComponent(() => import('@/components/Highlighted.vue')),
     {
@@ -131,7 +133,7 @@ export type Events = {
 
 export const eventBus = mitt<Events>()
 
-window.pastefy = {
+window.pastely = {
   app,
   router,
   appInfoStore,
@@ -142,9 +144,13 @@ window.pastefy = {
   componentInjections,
   vueFunctions,
 }
+
+// Backward compatibility alias for plugins
+// @ts-ignore
+window.pastefy = window.pastely
 ;(async () => {
-  if ('registerPastefyPlugin' in window && Array.isArray(window.registerPastefyPlugin)) {
-    for (const { entrypoint } of window.registerPastefyPlugin) {
+  if ('registerPastelyPlugin' in window && Array.isArray(window.registerPastelyPlugin)) {
+    for (const { entrypoint } of window.registerPastelyPlugin) {
       await import(entrypoint)
     }
   }

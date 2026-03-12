@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pastefy-prod
+  name: pastely-prod
   labels:
-    app: pastefy-prod
+    app: pastely-prod
 spec:
   selector:
     matchLabels:
-      app: pastefy-prod
+      app: pastely-prod
   template:
     metadata:
       labels:
-        app: pastefy-prod
+        app: pastely-prod
     spec:
       containers:
-        - name: pastefy-prod
+        - name: pastely-prod
           image: '${CI_REGISTRY}/${CI_PROJECT_PATH}:${BRANCH_SLUG_SHORT}-${CI_COMMIT_SHORT_SHA}'
           imagePullPolicy: Always
           ports:
             - containerPort: 80
           envFrom:
             - configMapRef:
-                name: pastefy-env
+                name: pastely-env
       imagePullSecrets:
         - name: 'docker-registry'
   revisionHistoryLimit: 1
@@ -29,19 +29,19 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: pastefy-prod
+  name: pastely-prod
 spec:
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
   selector:
-    app: pastefy-prod
+    app: pastely-prod
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: pastefy-prod
+  name: pastely-prod
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -50,7 +50,7 @@ spec:
   - hosts:
       - pastefy.ga
       - www.pastefy.ga
-    secretName: pastefy-prod-ssl
+    secretName: pastely-prod-ssl
   rules:
   - host: pastefy.ga
     http:
@@ -59,7 +59,7 @@ spec:
         path: /
         backend:
           service:
-            name: pastefy-prod
+            name: pastely-prod
             port:
               number: 80
   - host: www.pastefy.ga
@@ -69,6 +69,6 @@ spec:
         path: /
         backend:
           service:
-            name: pastefy-prod
+            name: pastely-prod
             port:
               number: 80

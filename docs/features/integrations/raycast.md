@@ -3,7 +3,7 @@
 
 ---
 
-Download it from the [Raycast Store](https://www.raycast.com/interaapps/pastefy)
+Download it from the [Raycast Store](https://www.raycast.com/interaapps/pastely)
 
 ---
 

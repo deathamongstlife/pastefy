@@ -1,4 +1,4 @@
-# Pastefy Techstack
+# pastely Techstack
 
 ## Backend
 - Java
@@ -16,7 +16,7 @@
 <br>
 
 ::: info
-Following: This is how the official Pastefy instance is being run
+Following: This is how the official pastely instance is being run
 :::
 
 ## Database etc.

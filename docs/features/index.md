@@ -1,21 +1,21 @@
 ---
-title: Pastefy Features
+title: pastely Features
 ---
 
-# Pastefy Features
+# pastely Features
 
-Pastefy is an **open source alternative to Gists or Pastebin** — built for developers and teams who want a simple, self-hostable way to share code, configuration, and text securely.
+pastely is an **open source alternative to Gists or Pastebin** — built for developers and teams who want a simple, self-hostable way to share code, configuration, and text securely.
 
 You can try it right now on the public instance:  
-👉 [**pastefy.app**](https://pastefy.app)
+👉 [**pastely.app**](https://pastely.app)
 
-## 🚀 What Makes Pastefy Special
+## 🚀 What Makes pastely Special
 
-Pastefy combines the simplicity of Pastebin with the flexibility of a modern web app.  
-Whether you’re just sharing a quick script, storing configuration files, or integrating it into your CI/CD pipeline — Pastefy adapts to your workflow.
+pastely combines the simplicity of Pastebin with the flexibility of a modern web app.  
+Whether you’re just sharing a quick script, storing configuration files, or integrating it into your CI/CD pipeline — pastely adapts to your workflow.
 
 ::: info
-**You can use Pastefy to...**
+**You can use pastely to...**
 - Quickly share code snippets or logs
 - Organize projects with folders
 - Record and share terminal sessions (via [Asciinema](./integrations/asciinema.md))
@@ -41,10 +41,10 @@ Whether you’re just sharing a quick script, storing configuration files, or in
 - **Dark / Light themes**
 
 ### 💾 Developer Tools
-- **API v2** with SDKs for [JavaScript](https://github.com/interaapps/js-api-clients?tab=readme-ov-file#pastefy), [Java](https://github.com/interaapps/pastefy-java-apiclient), and [Go](https://github.com/interaapps/pastefy-go-api)
+- **API v2** with SDKs for [JavaScript](https://github.com/interaapps/js-api-clients?tab=readme-ov-file#pastely), [Java](https://github.com/interaapps/pastely-java-apiclient), and [Go](https://github.com/interaapps/pastely-go-api)
 - **CLI & cURL upload**
   ```bash
-  curl -F f=@file.txt pastefy.app
+  curl -F f=@file.txt pastely.app
   ````
 
 * **OAuth2 Login** (Google, GitHub, Discord, Twitch, InteraApps, or custom OIDC)
@@ -52,7 +52,7 @@ Whether you’re just sharing a quick script, storing configuration files, or in
 
 ### 💫 Previews
 
-Pastefy supports rich previews for various file types:
+pastely supports rich previews for various file types:
 
 * 📝 [Markdown](./previews)
 * 🧭 Mermaid Diagrams
@@ -78,7 +78,7 @@ Pastefy supports rich previews for various file types:
 
 ### ☁️ Deployment
 
-Pastefy is built to run anywhere:
+pastely is built to run anywhere:
 
 * 🐳 [Docker](/self-hosting/installation/docker.md)
 * 🧩 [Docker Compose](/self-hosting/installation/docker-compose.md)
@@ -87,13 +87,13 @@ Pastefy is built to run anywhere:
 * Optional Redis, MinIO, and Elasticsearch integrations
 
 
-## 🧰 Build With Pastefy
+## 🧰 Build With pastely
 
-Pastefy isn’t just for sharing — it’s a **platform**.
+pastely isn’t just for sharing — it’s a **platform**.
 You can build apps, bots, or internal tools around it using the REST API.
 
 ::: tip
 If you just want to try it out, visit
-👉 [**pastefy.app**](https://pastefy.app)
+👉 [**pastely.app**](https://pastely.app)
 and start pasting — no setup required!
 :::

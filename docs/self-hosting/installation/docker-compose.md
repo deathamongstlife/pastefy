@@ -1,6 +1,6 @@
 # Docker-Compose Deployment
 
-Using Docker-Compose is a convenient way to run Pastefy together with its dependencies like MySQL, Redis, or MinIO in a single configuration.
+Using Docker-Compose is a convenient way to run pastely together with its dependencies like MySQL, Redis, or MinIO in a single configuration.
 
 ---
 
@@ -16,15 +16,15 @@ services:
       - dbvol:/var/lib/mysql
 
     environment:
-      MYSQL_ROOT_PASSWORD: pastefy
-      MYSQL_DATABASE: pastefy
-      MYSQL_USER: pastefy
-      MYSQL_PASSWORD: pastefy
+      MYSQL_ROOT_PASSWORD: pastely
+      MYSQL_DATABASE: pastely
+      MYSQL_USER: pastely
+      MYSQL_PASSWORD: pastely
 
-  pastefy:
+  pastely:
     depends_on:
       - db
-    image: interaapps/pastefy:latest
+    image: interaapps/pastely:latest
     ports:
       - "9999:80"
 
@@ -32,9 +32,9 @@ services:
       HTTP_SERVER_PORT: 80
       HTTP_SERVER_CORS: "*"
       DATABASE_DRIVER: mysql
-      DATABASE_NAME: pastefy
-      DATABASE_USER: pastefy
-      DATABASE_PASSWORD: pastefy
+      DATABASE_NAME: pastely
+      DATABASE_USER: pastely
+      DATABASE_PASSWORD: pastely
       DATABASE_HOST: db
       DATABASE_PORT: 3306
       SERVER_NAME: "http://localhost:9999"
@@ -54,7 +54,7 @@ volumes:
 docker-compose up -d
 ```
 
-This will start Pastefy along with the required services (database, Redis, etc.) in detached mode.
+This will start pastely along with the required services (database, Redis, etc.) in detached mode.
 
 ---
 
@@ -64,8 +64,8 @@ Before starting, you might want to configure some environment variables:
 
 ```yaml
 services:
-  pastefy:
-    image: interaapps/pastefy
+  pastely:
+    image: interaapps/pastely
     ports:
       - "8080:80"
     environment:
@@ -79,7 +79,7 @@ services:
 
 ---
 
-## **4. Starting & Stopping Pastefy**
+## **4. Starting & Stopping pastely**
 
 ```bash
 # Start all services
@@ -92,11 +92,11 @@ docker-compose down
 docker-compose logs -f
 ```
 
-> Tip: Use `docker-compose restart pastefy` to restart only the Pastefy service after changing environment variables.
+> Tip: Use `docker-compose restart pastely` to restart only the pastely service after changing environment variables.
 
 ---
 
 ## **5. Next Steps**
 
-* Verify that Pastefy is running at `http://localhost:8080`.
+* Verify that pastely is running at `http://localhost:8080`.
 * Configure OAuth logins if needed: [Configuration](../oauth.md)

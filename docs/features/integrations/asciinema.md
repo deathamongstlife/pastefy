@@ -25,21 +25,21 @@ watch(iframe, () => {
 
 <br>
 
-<iframe ref="iframe" class="paste" src="https://pastefy.app/ar9ehz8w/embed?hideActions=true" style="width: 700px; border: none; border-radius: 11px"></iframe>
+<iframe ref="iframe" class="paste" src="https://pastely.app/ar9ehz8w/embed?hideActions=true" style="width: 700px; border: none; border-radius: 11px"></iframe>
 
-Pastefy supports **Asciinema recordings**, making it easy to share terminal sessions with your friends, colleagues, or publicly. This feature is perfect for tutorials, demonstrations, or saving a terminal workflow for later.
+pastely supports **Asciinema recordings**, making it easy to share terminal sessions with your friends, colleagues, or publicly. This feature is perfect for tutorials, demonstrations, or saving a terminal workflow for later.
 
 ## What is Asciinema?
 
 [Asciinema](https://asciinema.org/) is an open-source tool for recording terminal sessions and sharing them online. Unlike screen recordings, Asciinema stores the session as text and commands, allowing others to **play it back interactively**.
 
-## How Pastefy Supports Asciinema
+## How pastely Supports Asciinema
 
-With Pastefy, you can:
+With pastely, you can:
 
 - Upload `.cast` files directly.
-- Share them via a unique Pastefy link.
-- Authenticate via your Pastefy account for private or public recordings.
+- Share them via a unique pastely link.
+- Authenticate via your pastely account for private or public recordings.
 
 ### Supported Commands
 
@@ -48,27 +48,27 @@ With Pastefy, you can:
 asciinema rec test.cast
 
 # Stop recording and save
-# Upload the recording to Pastefy
+# Upload the recording to pastely
 asciinema upload test.cast
 ````
 
-### Authentication with Pastefy
+### Authentication with pastely
 
-To link your Asciinema recordings to your Pastefy account:
+To link your Asciinema recordings to your pastely account:
 
 #### 1.
 configure: nano ~/.config/asciinema/config
 ```toml
 [api]
-url = https://pastefy.app
+url = https://pastely.app
 ```
 
 #### 2. auth via cli
 ```bash
-# Authenticate Asciinema with Pastefy
+# Authenticate Asciinema with pastely
 asciinema auth
 
-# Set your Pastefy API key for Asciinema
+# Set your pastely API key for Asciinema
 echo YOUR_PASTEFY_API_KEY > ~/.config/asciinema/install-id
 
 # Upload your recording
@@ -77,8 +77,8 @@ asciinema upload test.cast
 
 ### Example Paste
 
-You can see an example recording on Pastefy [here](https://pastefy.app/ar9ehz8w).
+You can see an example recording on pastely [here](https://pastely.app/ar9ehz8w).
 
 ---
 
-With this integration, **sharing terminal demos has never been easier**. Pastefy keeps your recordings organized, easy to share, and accessible anywhere.
+With this integration, **sharing terminal demos has never been easier**. pastely keeps your recordings organized, easy to share, and accessible anywhere.

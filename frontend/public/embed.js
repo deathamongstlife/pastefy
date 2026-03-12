@@ -1,4 +1,4 @@
-export function embedPastefy(parentEl, pasteId, settings = {}, origin = 'https://pastefy.app') {
+export function embedPastely(parentEl, pasteId, settings = {}, origin = 'https://pastely.app') {
   if (typeof settings === 'string') origin = settings
 
   const iframe = document.createElement('iframe')

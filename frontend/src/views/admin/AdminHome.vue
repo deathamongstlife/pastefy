@@ -5,7 +5,7 @@ import LoadingContainer from '@/components/LoadingContainer.vue'
 import ErrorContainer from '@/components/ErrorContainer.vue'
 import StatsCard from '@/components/admin/StatsCard.vue'
 
-useTitle('Home - Admin | pastefy')
+useTitle('Home - Admin | Pastely')
 
 const {
   isLoading,

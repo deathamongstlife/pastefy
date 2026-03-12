@@ -177,10 +177,9 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>de.interaapps.pastefy.Pastefy</mainClass>
+                            <mainClass>de.interaapps.pastely.Pastely</mainClass>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
-                        <!-- NOTE: Full package rename to de.interaapps.pastely recommended but requires updating 98 Java files -->
                     </archive>
                 </configuration>
             </plugin>

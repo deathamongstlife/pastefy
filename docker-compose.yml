@@ -12,10 +12,10 @@ services:
        MYSQL_USER: pastefy
        MYSQL_PASSWORD: pastefy
 
-   pastefy:
+   pastely:
      depends_on:
        - db
-     image: interaapps/pastefy:latest
+     image: interaapps/pastely:latest
      ports:
        - "9999:80"
        
