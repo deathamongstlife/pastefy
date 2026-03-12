@@ -1,23 +1,12 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Table;
-import org.javawebstack.webutils.util.RandomUtil;
-
+import org.javawebstack.orm.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * CollectionPaste - Many-to-many relationship between collections and pastes
- * Part of the Enhanced Organization feature
- */
 @Table("collection_pastes")
 public class CollectionPaste extends Model {
-
-    @Column(size = 8)
-    private String id;
-
     @Column(size = 8)
     private String collectionId;
 
@@ -25,19 +14,10 @@ public class CollectionPaste extends Model {
     private String pasteId;
 
     @Column
-    private Integer sortOrder;
+    private Integer sortOrder = 0;
 
     @Column
     private Timestamp addedAt;
-
-    public CollectionPaste() {
-        this.id = RandomUtil.string(8);
-        this.addedAt = Timestamp.from(Instant.now());
-    }
-
-    public String getId() {
-        return id;
-    }
 
     public String getCollectionId() {
         return collectionId;
@@ -65,5 +45,13 @@ public class CollectionPaste extends Model {
 
     public Timestamp getAddedAt() {
         return addedAt;
+    }
+
+    @Override
+    public void save() {
+        if (addedAt == null) {
+            addedAt = Timestamp.from(Instant.now());
+        }
+        super.save();
     }
 }

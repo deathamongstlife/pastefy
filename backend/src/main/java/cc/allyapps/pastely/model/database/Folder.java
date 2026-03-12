@@ -104,4 +104,46 @@ public class Folder extends Model {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getParentKey() {
+        return parent;
+    }
+
+    public boolean hasParent() {
+        return parent != null && !parent.isEmpty();
+    }
+
+    public List<Folder> getAncestors() {
+        List<Folder> ancestors = new java.util.ArrayList<>();
+        Folder current = this.getParent();
+        while (current != null) {
+            ancestors.add(current);
+            current = current.getParent();
+        }
+        return ancestors;
+    }
+
+    public List<Folder> getAllSubfolders() {
+        List<Folder> subfolders = new java.util.ArrayList<>();
+        List<Folder> directChildren = getFolders();
+        subfolders.addAll(directChildren);
+        for (Folder child : directChildren) {
+            subfolders.addAll(child.getAllSubfolders());
+        }
+        return subfolders;
+    }
+
+    public int getDepth() {
+        int depth = 0;
+        Folder current = this.getParent();
+        while (current != null) {
+            depth++;
+            current = current.getParent();
+        }
+        return depth;
+    }
+
+    public static Folder get(String key) {
+        return Repo.get(Folder.class).where("key", key).first();
+    }
 }

@@ -1,67 +1,34 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Dates;
-import org.javawebstack.orm.annotation.Table;
+import org.javawebstack.orm.Repo;
+import org.javawebstack.orm.annotation.*;
 
-/**
- * UserProfile - Extended user profile information
- * Part of the Social Features
- */
-@Dates
 @Table("user_profiles")
 public class UserProfile extends Model {
-
     @Column(size = 8)
     private String userId;
 
-    @Column(size = 500)
+    @Column(size = 1000)
     private String bio;
 
-    @Column
+    @Column(size = 255)
     private String website;
 
-    @Column
-    private String twitter;
-
-    @Column
-    private String github;
-
-    @Column
-    private String linkedin;
-
-    @Column
+    @Column(size = 255)
     private String location;
 
-    @Column
+    @Column(size = 255)
     private String company;
 
-    @Column
+    @Column(size = 255)
     private String avatarUrl;
 
-    @Column
-    private boolean emailNotifications;
+    @Column(size = 255)
+    private String githubUsername;
 
-    @Column
-    private boolean activityFeedPublic;
-
-    @Column
-    private String theme; // dark, light, auto
-
-    @Column
-    private String editorTheme;
-
-    @Column
-    private Integer fontSize;
-
-    public UserProfile() {
-        this.emailNotifications = true;
-        this.activityFeedPublic = true;
-        this.theme = "auto";
-        this.editorTheme = "monokai";
-        this.fontSize = 14;
-    }
+    @Column(size = 255)
+    private String twitterUsername;
 
     public String getUserId() {
         return userId;
@@ -85,30 +52,6 @@ public class UserProfile extends Model {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
-    public String getGithub() {
-        return github;
-    }
-
-    public void setGithub(String github) {
-        this.github = github;
-    }
-
-    public String getLinkedin() {
-        return linkedin;
-    }
-
-    public void setLinkedin(String linkedin) {
-        this.linkedin = linkedin;
     }
 
     public String getLocation() {
@@ -135,43 +78,27 @@ public class UserProfile extends Model {
         this.avatarUrl = avatarUrl;
     }
 
-    public boolean isEmailNotifications() {
-        return emailNotifications;
+    public String getGithubUsername() {
+        return githubUsername;
     }
 
-    public void setEmailNotifications(boolean emailNotifications) {
-        this.emailNotifications = emailNotifications;
+    public void setGithubUsername(String githubUsername) {
+        this.githubUsername = githubUsername;
     }
 
-    public boolean isActivityFeedPublic() {
-        return activityFeedPublic;
+    public String getTwitterUsername() {
+        return twitterUsername;
     }
 
-    public void setActivityFeedPublic(boolean activityFeedPublic) {
-        this.activityFeedPublic = activityFeedPublic;
+    public void setTwitterUsername(String twitterUsername) {
+        this.twitterUsername = twitterUsername;
     }
 
-    public String getTheme() {
-        return theme;
+    public User getUser() {
+        return User.get(userId);
     }
 
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    public String getEditorTheme() {
-        return editorTheme;
-    }
-
-    public void setEditorTheme(String editorTheme) {
-        this.editorTheme = editorTheme;
-    }
-
-    public Integer getFontSize() {
-        return fontSize;
-    }
-
-    public void setFontSize(Integer fontSize) {
-        this.fontSize = fontSize;
+    public static UserProfile getByUserId(String userId) {
+        return Repo.get(UserProfile.class).where("userId", userId).first();
     }
 }

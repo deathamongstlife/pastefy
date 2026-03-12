@@ -1,20 +1,13 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Table;
-import org.javawebstack.webutils.util.RandomUtil;
-
+import org.javawebstack.orm.Repo;
+import org.javawebstack.orm.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * PasteView - Tracks individual paste views for analytics
- * Part of the Analytics & Tracking feature
- */
 @Table("paste_views")
 public class PasteView extends Model {
-
     @Column(size = 8)
     private String id;
 
@@ -22,36 +15,32 @@ public class PasteView extends Model {
     private String pasteId;
 
     @Column(size = 8)
-    private String userId; // Null if anonymous
+    private String userId;
 
-    @Column
+    @Column(size = 45)
     private String ipAddress;
 
-    @Column
+    @Column(size = 500)
     private String userAgent;
 
-    @Column
+    @Column(size = 255)
     private String referer;
 
-    @Column
+    @Column(size = 100)
     private String country;
 
-    @Column
+    @Column(size = 100)
     private String city;
 
     @Column
     private Timestamp viewedAt;
 
-    @Column
-    private Integer timeSpent; // Seconds spent on the paste
-
-    public PasteView() {
-        this.id = RandomUtil.string(8);
-        this.viewedAt = Timestamp.from(Instant.now());
-    }
-
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPasteId() {
@@ -114,11 +103,27 @@ public class PasteView extends Model {
         return viewedAt;
     }
 
-    public Integer getTimeSpent() {
-        return timeSpent;
+    public Paste getPaste() {
+        return Paste.get(pasteId);
     }
 
-    public void setTimeSpent(Integer timeSpent) {
-        this.timeSpent = timeSpent;
+    public User getUser() {
+        if (userId != null) {
+            return User.get(userId);
+        }
+        return null;
+    }
+
+    public static PasteView get(String id) {
+        return Repo.get(PasteView.class).where("id", id).first();
+    }
+
+    @Override
+    public void save() {
+        if (id == null) {
+            id = org.javawebstack.webutils.util.RandomUtil.string(8);
+            viewedAt = Timestamp.from(Instant.now());
+        }
+        super.save();
     }
 }

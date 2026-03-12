@@ -1,45 +1,40 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Table;
-import org.javawebstack.webutils.util.RandomUtil;
-
+import org.javawebstack.orm.Repo;
+import org.javawebstack.orm.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * UserActivity - Activity feed for user actions
- * Part of the Social Features
- */
 @Table("user_activities")
 public class UserActivity extends Model {
-
     @Column(size = 8)
     private String id;
 
     @Column(size = 8)
     private String userId;
 
-    @Column
-    private String activityType; // CREATED_PASTE, FORKED_PASTE, COMMENTED, STARRED, etc.
+    @Column(size = 50)
+    private String activityType;
 
     @Column(size = 8)
-    private String targetId; // ID of the paste, comment, etc.
+    private String targetId;
 
-    @Column
-    private String metadata; // JSON string for additional data
+    @Column(size = 50)
+    private String targetType;
+
+    @Column(size = 1000)
+    private String metadata;
 
     @Column
     private Timestamp createdAt;
 
-    public UserActivity() {
-        this.id = RandomUtil.string(8);
-        this.createdAt = Timestamp.from(Instant.now());
-    }
-
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserId() {
@@ -66,6 +61,14 @@ public class UserActivity extends Model {
         this.targetId = targetId;
     }
 
+    public String getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
+
     public String getMetadata() {
         return metadata;
     }
@@ -76,5 +79,22 @@ public class UserActivity extends Model {
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    public User getUser() {
+        return User.get(userId);
+    }
+
+    public static UserActivity get(String id) {
+        return Repo.get(UserActivity.class).where("id", id).first();
+    }
+
+    @Override
+    public void save() {
+        if (id == null) {
+            id = org.javawebstack.webutils.util.RandomUtil.string(8);
+            createdAt = Timestamp.from(Instant.now());
+        }
+        super.save();
     }
 }

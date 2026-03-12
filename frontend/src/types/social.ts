@@ -1,79 +1,46 @@
-/**
- * Type definitions for Social Features
- */
-
-export interface UserFollow {
+export type UserProfile = {
   id: string
-  followerId: string
-  followingId: string
-  createdAt: string
+  name: string
+  username: string
+  bio?: string
+  website?: string
+  location?: string
+  company?: string
+  avatar_url?: string
+  github_username?: string
+  twitter_username?: string
+  paste_count?: number
+  follower_count?: number
+  following_count?: number
 }
 
-export interface PasteComment {
+export type Activity = {
   id: string
-  pasteId: string
-  userId: string
-  parentCommentId?: string
-  content: string
-  isEdited: boolean
-  createdAt: string
-  updatedAt: string
-  isDeleted: boolean
+  user_id: string
+  activity_type: string
+  target_id: string
+  target_type: string
+  metadata?: string
+  created_at: string
   user?: {
     id: string
     name: string
-    avatarUrl?: string
+    username: string
   }
-  replies?: PasteComment[]
 }
 
-export interface UserActivity {
-  id: string
-  userId: string
-  activityType: string
-  targetId: string
-  metadata?: string
-  createdAt: string
-}
-
-export interface UserProfile {
-  userId: string
+export type UpdateProfileRequest = {
   bio?: string
   website?: string
-  twitter?: string
-  github?: string
-  linkedin?: string
   location?: string
   company?: string
-  avatarUrl?: string
-  emailNotifications: boolean
-  activityFeedPublic: boolean
-  theme: string
-  editorTheme: string
-  fontSize: number
+  githubUsername?: string
+  twitterUsername?: string
 }
 
-export interface CommentCreateRequest {
-  content: string
-  parentCommentId?: string
-}
-
-export interface CommentUpdateRequest {
-  content: string
-}
-
-export interface UserProfileUpdateRequest {
-  bio?: string
-  website?: string
-  twitter?: string
-  github?: string
-  linkedin?: string
-  location?: string
-  company?: string
-  avatarUrl?: string
-  emailNotifications?: boolean
-  activityFeedPublic?: boolean
-  theme?: string
-  editorTheme?: string
-  fontSize?: number
+export type UserStats = {
+  user_id: string
+  paste_count: number
+  follower_count: number
+  following_count: number
 }

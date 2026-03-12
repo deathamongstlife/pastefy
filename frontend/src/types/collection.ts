@@ -1,44 +1,28 @@
-/**
- * Type definitions for Enhanced Organization
- */
-
-export interface PasteCollection {
+export type Collection = {
   id: string
-  userId: string
   name: string
-  description?: string
-  isPublic: boolean
-  coverImage?: string
-  createdAt: string
-  updatedAt: string
+  description: string
+  user_id: string
+  is_public: boolean
+  icon?: string
+  color?: string
+  created_at: string
+  updated_at: string
+  paste_count?: number
 }
 
-export interface CollectionPaste {
-  id: string
-  collectionId: string
-  pasteId: string
-  sortOrder: number
-  addedAt: string
-}
-
-export interface CollectionWithPastes {
-  collection: PasteCollection
-  pastes: any[]
-}
-
-export interface CollectionCreateRequest {
+export type CreateCollectionRequest = {
   name: string
   description?: string
   isPublic?: boolean
+  icon?: string
+  color?: string
 }
 
-export interface CollectionUpdateRequest {
+export type UpdateCollectionRequest = {
   name?: string
   description?: string
   isPublic?: boolean
-}
-
-export interface CollectionAddPasteRequest {
-  pasteKey: string
-  sortOrder?: number
+  icon?: string
+  color?: string
 }

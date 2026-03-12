@@ -1,68 +1,27 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Table;
-import org.javawebstack.webutils.util.RandomUtil;
-
+import org.javawebstack.orm.Repo;
+import org.javawebstack.orm.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * ViewAnalytics - Aggregated analytics for paste views
- * Part of the Analytics & Tracking feature
- */
 @Table("view_analytics")
 public class ViewAnalytics extends Model {
-
-    @Column(size = 8)
-    private String id;
-
     @Column(size = 8)
     private String pasteId;
 
-    @Column
-    private Integer totalViews;
+    @Column(size = 10)
+    private String date;
 
     @Column
-    private Integer uniqueViews;
+    private Integer viewCount = 0;
 
     @Column
-    private Integer todayViews;
+    private Integer uniqueViewCount = 0;
 
     @Column
-    private Integer weekViews;
-
-    @Column
-    private Integer monthViews;
-
-    @Column
-    private Double averageTimeSpent;
-
-    @Column
-    private Double trendingScore; // Calculated score for trending
-
-    @Column
-    private Timestamp lastViewedAt;
-
-    @Column
-    private Timestamp lastCalculatedAt;
-
-    public ViewAnalytics() {
-        this.id = RandomUtil.string(8);
-        this.totalViews = 0;
-        this.uniqueViews = 0;
-        this.todayViews = 0;
-        this.weekViews = 0;
-        this.monthViews = 0;
-        this.averageTimeSpent = 0.0;
-        this.trendingScore = 0.0;
-        this.lastCalculatedAt = Timestamp.from(Instant.now());
-    }
-
-    public String getId() {
-        return id;
-    }
+    private Timestamp updatedAt;
 
     public String getPasteId() {
         return pasteId;
@@ -72,75 +31,48 @@ public class ViewAnalytics extends Model {
         this.pasteId = pasteId;
     }
 
-    public Integer getTotalViews() {
-        return totalViews;
+    public String getDate() {
+        return date;
     }
 
-    public void setTotalViews(Integer totalViews) {
-        this.totalViews = totalViews;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public Integer getUniqueViews() {
-        return uniqueViews;
+    public Integer getViewCount() {
+        return viewCount;
     }
 
-    public void setUniqueViews(Integer uniqueViews) {
-        this.uniqueViews = uniqueViews;
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
-    public Integer getTodayViews() {
-        return todayViews;
+    public Integer getUniqueViewCount() {
+        return uniqueViewCount;
     }
 
-    public void setTodayViews(Integer todayViews) {
-        this.todayViews = todayViews;
+    public void setUniqueViewCount(Integer uniqueViewCount) {
+        this.uniqueViewCount = uniqueViewCount;
     }
 
-    public Integer getWeekViews() {
-        return weekViews;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setWeekViews(Integer weekViews) {
-        this.weekViews = weekViews;
+    public Paste getPaste() {
+        return Paste.get(pasteId);
     }
 
-    public Integer getMonthViews() {
-        return monthViews;
+    public static ViewAnalytics getByPasteAndDate(String pasteId, String date) {
+        return Repo.get(ViewAnalytics.class)
+            .where("pasteId", pasteId)
+            .where("date", date)
+            .first();
     }
 
-    public void setMonthViews(Integer monthViews) {
-        this.monthViews = monthViews;
-    }
-
-    public Double getAverageTimeSpent() {
-        return averageTimeSpent;
-    }
-
-    public void setAverageTimeSpent(Double averageTimeSpent) {
-        this.averageTimeSpent = averageTimeSpent;
-    }
-
-    public Double getTrendingScore() {
-        return trendingScore;
-    }
-
-    public void setTrendingScore(Double trendingScore) {
-        this.trendingScore = trendingScore;
-    }
-
-    public Timestamp getLastViewedAt() {
-        return lastViewedAt;
-    }
-
-    public void setLastViewedAt(Timestamp lastViewedAt) {
-        this.lastViewedAt = lastViewedAt;
-    }
-
-    public Timestamp getLastCalculatedAt() {
-        return lastCalculatedAt;
-    }
-
-    public void setLastCalculatedAt(Timestamp lastCalculatedAt) {
-        this.lastCalculatedAt = lastCalculatedAt;
+    @Override
+    public void save() {
+        updatedAt = Timestamp.from(Instant.now());
+        super.save();
     }
 }

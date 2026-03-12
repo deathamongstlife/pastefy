@@ -7,25 +7,28 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 @Dates
-@Table("paste_comments")
-public class PasteComment extends Model {
+@Table("collections")
+public class Collection extends Model {
     @Column(size = 8)
     private String id;
 
-    @Column(size = 8)
-    private String pasteId;
+    @Column(size = 255)
+    private String name;
+
+    @Column(size = 1000)
+    private String description;
 
     @Column(size = 8)
     private String userId;
 
-    @Column(size = 8)
-    private String parentCommentId;
-
-    @Column(size = 5000)
-    private String content;
-
     @Column
-    private Integer lineNumber;
+    private boolean isPublic = false;
+
+    @Column(size = 50)
+    private String icon;
+
+    @Column(size = 50)
+    private String color;
 
     @Column
     private Timestamp createdAt;
@@ -41,12 +44,20 @@ public class PasteComment extends Model {
         this.id = id;
     }
 
-    public String getPasteId() {
-        return pasteId;
+    public String getName() {
+        return name;
     }
 
-    public void setPasteId(String pasteId) {
-        this.pasteId = pasteId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getUserId() {
@@ -57,28 +68,28 @@ public class PasteComment extends Model {
         this.userId = userId;
     }
 
-    public String getParentCommentId() {
-        return parentCommentId;
+    public boolean isPublic() {
+        return isPublic;
     }
 
-    public void setParentCommentId(String parentCommentId) {
-        this.parentCommentId = parentCommentId;
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
-    public String getContent() {
-        return content;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public Integer getLineNumber() {
-        return lineNumber;
+    public String getColor() {
+        return color;
     }
 
-    public void setLineNumber(Integer lineNumber) {
-        this.lineNumber = lineNumber;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Timestamp getCreatedAt() {
@@ -93,12 +104,8 @@ public class PasteComment extends Model {
         return User.get(userId);
     }
 
-    public Paste getPaste() {
-        return Paste.get(pasteId);
-    }
-
-    public static PasteComment get(String id) {
-        return Repo.get(PasteComment.class).where("id", id).first();
+    public static Collection get(String id) {
+        return Repo.get(Collection.class).where("id", id).first();
     }
 
     @Override
@@ -113,7 +120,7 @@ public class PasteComment extends Model {
 
     @Override
     public void delete() {
-        Repo.get(PasteComment.class).where("parentCommentId", id).delete();
+        Repo.get(CollectionPaste.class).where("collectionId", id).delete();
         super.delete();
     }
 }

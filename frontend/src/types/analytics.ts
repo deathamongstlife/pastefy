@@ -1,49 +1,24 @@
-/**
- * Type definitions for Analytics & Tracking
- */
-
-export interface PasteView {
-  id: string
-  pasteId: string
-  userId?: string
-  ipAddress: string
-  userAgent?: string
+export type ViewData = {
+  ip_address: string
+  user_agent: string
   referer?: string
   country?: string
   city?: string
-  viewedAt: string
-  timeSpent?: number
+  viewed_at: string
 }
 
-export interface ViewAnalytics {
-  id: string
-  pasteId: string
-  totalViews: number
-  uniqueViews: number
-  todayViews: number
-  weekViews: number
-  monthViews: number
-  averageTimeSpent: number
-  trendingScore: number
-  lastViewedAt?: string
-  lastCalculatedAt: string
-}
-
-export interface ViewTrackRequest {
-  timeSpent?: number
-}
-
-export interface TimelineDataPoint {
+export type DateViewData = {
   date: string
-  views: number
+  view_count: number
+  unique_view_count: number
 }
 
-export interface GeographicDataPoint {
-  country: string
-  views: number
-}
-
-export interface TrendingItem {
-  paste: any
-  analytics: ViewAnalytics
+export type PasteAnalytics = {
+  paste_id: string
+  total_views: number
+  unique_views: number
+  recent_views: ViewData[]
+  views_by_date: DateViewData[]
+  top_countries: Record<string, number>
+  top_referers: Record<string, number>
 }

@@ -1,260 +1,142 @@
 package cc.allyapps.pastely.controller;
 
 import cc.allyapps.pastely.Pastely;
-import cc.allyapps.pastely.exceptions.AuthenticationException;
-import cc.allyapps.pastely.exceptions.NotFoundException;
+import cc.allyapps.pastely.exceptions.*;
 import cc.allyapps.pastely.model.database.*;
+import cc.allyapps.pastely.model.responses.*;
+import org.javawebstack.http.router.annotation.*;
 import org.javawebstack.http.router.Exchange;
-import org.javawebstack.http.router.router.annotation.PathPrefix;
-import org.javawebstack.http.router.router.annotation.With;
-import org.javawebstack.http.router.router.annotation.params.Body;
-import org.javawebstack.http.router.router.annotation.params.Path;
-import org.javawebstack.http.router.router.annotation.params.Query;
-import org.javawebstack.http.router.router.annotation.verbs.Get;
-import org.javawebstack.http.router.router.annotation.verbs.Post;
 import org.javawebstack.orm.Repo;
-
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * AnalyticsController - Analytics and tracking for pastes
- * Part of the Analytics & Tracking feature
- */
 @PathPrefix("/api/v2/analytics")
 public class AnalyticsController extends HttpController {
 
-    @Post("/paste/{pasteKey}/view")
-    public void trackView(
-            @Path("pasteKey") String pasteKey,
-            @Body("timeSpent") Integer timeSpent,
-            Exchange exchange
-    ) {
+    @Post("/track/{pasteKey}")
+    public ActionResponse trackView(@Path("pasteKey") String pasteKey,
+                                   Exchange exchange) {
         Paste paste = Paste.get(pasteKey);
-        if (paste == null) return;
+        if (paste == null) {
+            throw new NotFoundException("Paste not found");
+        }
 
         PasteView view = new PasteView();
-        view.setPasteId(paste.getKey());
+        view.setPasteId(pasteKey);
+        view.setIpAddress(exchange.getClientIP());
+        view.setUserAgent(exchange.header("User-Agent"));
+        view.setReferer(exchange.header("Referer"));
 
         User user = exchange.attrib("user");
         if (user != null) {
             view.setUserId(user.getId());
         }
 
-        String clientIp = exchange.header("X-Forwarded-For");
-        if (clientIp == null) {
-            clientIp = exchange.ip();
-        }
-        view.setIpAddress(clientIp);
-
-        view.setUserAgent(exchange.header("User-Agent"));
-        view.setReferer(exchange.header("Referer"));
-        view.setTimeSpent(timeSpent);
-
         view.save();
 
-        // Update aggregated analytics asynchronously
-        Pastely.getInstance().executeAsync(() -> updateAnalytics(paste.getKey()));
+        Pastely.getInstance().executeAsync(() -> updateAnalytics(pasteKey));
+
+        return new ActionResponse(true);
     }
 
     @Get("/paste/{pasteKey}")
     @With({"auth"})
-    public ViewAnalytics getPasteAnalytics(@Path("pasteKey") String pasteKey, Exchange exchange) {
-        User user = exchange.attrib("user");
-        if (user == null) throw new AuthenticationException();
-
+    public PasteAnalyticsResponse getAnalytics(@Path("pasteKey") String pasteKey,
+                                              @Attrib("user") User user) {
         Paste paste = Paste.getAccessiblePasteOrFail(pasteKey, user);
 
-        if (!Objects.equals(paste.getUserId(), user.getId())) {
-            throw new AuthenticationException();
+        if (!paste.getUserId().equals(user.getId())) {
+            throw new PermissionsDeniedException();
         }
 
-        ViewAnalytics analytics = Repo.get(ViewAnalytics.class)
-                .where("pasteId", paste.getKey())
-                .first();
+        int totalViews = (int) Repo.get(PasteView.class)
+            .where("pasteId", pasteKey)
+            .count();
 
-        if (analytics == null) {
-            analytics = new ViewAnalytics();
-            analytics.setPasteId(paste.getKey());
-        }
+        List<PasteView> recentViews = Repo.get(PasteView.class)
+            .where("pasteId", pasteKey)
+            .order("viewedAt", true)
+            .limit(100)
+            .all();
 
-        return analytics;
+        List<ViewAnalytics> analytics = Repo.get(ViewAnalytics.class)
+            .where("pasteId", pasteKey)
+            .order("date", true)
+            .limit(30)
+            .all();
+
+        return PasteAnalyticsResponse.create(paste, totalViews, recentViews, analytics);
     }
 
     @Get("/trending")
-    public List<Map<String, Object>> getTrending(@Query("limit") Integer limit) {
-        if (limit == null || limit > 50) {
-            limit = 50;
-        }
+    public List<PasteResponse> getTrending(@Query("limit") Integer limit) {
+        if (limit == null || limit > 50) limit = 20;
 
-        List<ViewAnalytics> trending = Repo.get(ViewAnalytics.class)
-                .orderBy("trendingScore", true)
-                .limit(limit)
-                .get();
+        List<PublicPasteEngagement> trending = Repo.get(PublicPasteEngagement.class)
+            .order("score", true)
+            .limit(limit)
+            .all();
 
-        return trending.stream().map(analytics -> {
-            Paste paste = Paste.get(analytics.getPasteId());
-            if (paste == null || !paste.isPublic()) return null;
-
-            Map<String, Object> result = new HashMap<>();
-            result.put("paste", paste);
-            result.put("analytics", analytics);
-            return result;
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+        return trending.stream()
+            .map(e -> Paste.get(e.getPasteId()))
+            .filter(p -> p != null && p.isPublic())
+            .map(p -> PasteResponse.create(p, null))
+            .collect(Collectors.toList());
     }
 
-    @Get("/paste/{pasteKey}/views/timeline")
-    @With({"auth"})
-    public List<Map<String, Object>> getViewsTimeline(
-            @Path("pasteKey") String pasteKey,
-            @Query("days") Integer days,
-            Exchange exchange
-    ) {
-        User user = exchange.attrib("user");
-        if (user == null) throw new AuthenticationException();
-
-        Paste paste = Paste.getAccessiblePasteOrFail(pasteKey, user);
-
-        if (!Objects.equals(paste.getUserId(), user.getId())) {
-            throw new AuthenticationException();
+    @Get("/user/{userId}/stats")
+    public UserStatsResponse getUserStats(@Path("userId") String userId) {
+        User user = User.get(userId);
+        if (user == null) {
+            throw new NotFoundException("User not found");
         }
 
-        if (days == null || days > 90) {
-            days = 30;
-        }
+        int pasteCount = (int) Repo.get(Paste.class)
+            .where("userId", userId)
+            .count();
 
-        Timestamp startDate = Timestamp.from(Instant.now().minus(days, ChronoUnit.DAYS));
+        int followerCount = (int) Repo.get(UserFollow.class)
+            .where("followingId", userId)
+            .count();
 
-        List<PasteView> views = Repo.get(PasteView.class)
-                .where("pasteId", paste.getKey())
-                .where("viewedAt", ">=", startDate)
-                .orderBy("viewedAt", false)
-                .get();
+        int followingCount = (int) Repo.get(UserFollow.class)
+            .where("followerId", userId)
+            .count();
 
-        // Group by day
-        Map<String, Long> viewsByDay = views.stream()
-                .collect(Collectors.groupingBy(
-                        view -> view.getViewedAt().toLocalDateTime().toLocalDate().toString(),
-                        Collectors.counting()
-                ));
+        UserStatsResponse stats = new UserStatsResponse();
+        stats.userId = userId;
+        stats.pasteCount = pasteCount;
+        stats.followerCount = followerCount;
+        stats.followingCount = followingCount;
 
-        return viewsByDay.entrySet().stream()
-                .map(entry -> {
-                    Map<String, Object> result = new HashMap<>();
-                    result.put("date", entry.getKey());
-                    result.put("views", entry.getValue());
-                    return result;
-                })
-                .sorted(Comparator.comparing(m -> (String) m.get("date")))
-                .collect(Collectors.toList());
-    }
-
-    @Get("/paste/{pasteKey}/views/geographic")
-    @With({"auth"})
-    public List<Map<String, Object>> getGeographicDistribution(
-            @Path("pasteKey") String pasteKey,
-            Exchange exchange
-    ) {
-        User user = exchange.attrib("user");
-        if (user == null) throw new AuthenticationException();
-
-        Paste paste = Paste.getAccessiblePasteOrFail(pasteKey, user);
-
-        if (!Objects.equals(paste.getUserId(), user.getId())) {
-            throw new AuthenticationException();
-        }
-
-        List<PasteView> views = Repo.get(PasteView.class)
-                .where("pasteId", paste.getKey())
-                .get();
-
-        // Group by country
-        Map<String, Long> viewsByCountry = views.stream()
-                .filter(view -> view.getCountry() != null)
-                .collect(Collectors.groupingBy(
-                        PasteView::getCountry,
-                        Collectors.counting()
-                ));
-
-        return viewsByCountry.entrySet().stream()
-                .map(entry -> {
-                    Map<String, Object> result = new HashMap<>();
-                    result.put("country", entry.getKey());
-                    result.put("views", entry.getValue());
-                    return result;
-                })
-                .sorted(Comparator.comparing(m -> -(Long) m.get("views")))
-                .collect(Collectors.toList());
+        return stats;
     }
 
     private void updateAnalytics(String pasteKey) {
-        ViewAnalytics analytics = Repo.get(ViewAnalytics.class)
-                .where("pasteId", pasteKey)
-                .first();
+        String today = LocalDate.now().toString();
+
+        ViewAnalytics analytics = ViewAnalytics.getByPasteAndDate(pasteKey, today);
 
         if (analytics == null) {
             analytics = new ViewAnalytics();
             analytics.setPasteId(pasteKey);
+            analytics.setDate(today);
         }
 
-        List<PasteView> allViews = Repo.get(PasteView.class)
-                .where("pasteId", pasteKey)
-                .get();
+        analytics.setViewCount(analytics.getViewCount() + 1);
 
-        analytics.setTotalViews(allViews.size());
+        List<PasteView> todayViews = Repo.get(PasteView.class)
+            .where("pasteId", pasteKey)
+            .raw("DATE(viewedAt) = ?", today)
+            .all();
 
-        // Unique views (by IP)
-        Set<String> uniqueIps = allViews.stream()
-                .map(PasteView::getIpAddress)
-                .filter(Objects::nonNull)
-                .collect(Collectors.toSet());
-        analytics.setUniqueViews(uniqueIps.size());
+        long uniqueCount = todayViews.stream()
+            .map(PasteView::getIpAddress)
+            .distinct()
+            .count();
 
-        // Time-based views
-        Instant now = Instant.now();
-        Timestamp today = Timestamp.from(now.truncatedTo(ChronoUnit.DAYS));
-        Timestamp weekAgo = Timestamp.from(now.minus(7, ChronoUnit.DAYS));
-        Timestamp monthAgo = Timestamp.from(now.minus(30, ChronoUnit.DAYS));
-
-        analytics.setTodayViews((int) allViews.stream()
-                .filter(v -> v.getViewedAt().after(today))
-                .count());
-
-        analytics.setWeekViews((int) allViews.stream()
-                .filter(v -> v.getViewedAt().after(weekAgo))
-                .count());
-
-        analytics.setMonthViews((int) allViews.stream()
-                .filter(v -> v.getViewedAt().after(monthAgo))
-                .count());
-
-        // Average time spent
-        OptionalDouble avgTime = allViews.stream()
-                .filter(v -> v.getTimeSpent() != null && v.getTimeSpent() > 0)
-                .mapToInt(PasteView::getTimeSpent)
-                .average();
-
-        analytics.setAverageTimeSpent(avgTime.isPresent() ? avgTime.getAsDouble() : 0.0);
-
-        // Calculate trending score (recent views weighted more heavily)
-        double trendingScore = allViews.stream()
-                .mapToDouble(view -> {
-                    long hoursAgo = ChronoUnit.HOURS.between(view.getViewedAt().toInstant(), now);
-                    double decay = Math.exp(-hoursAgo / 168.0); // Decay over a week
-                    return decay;
-                })
-                .sum();
-
-        analytics.setTrendingScore(trendingScore);
-
-        if (!allViews.isEmpty()) {
-            analytics.setLastViewedAt(allViews.get(allViews.size() - 1).getViewedAt());
-        }
-
-        analytics.setLastCalculatedAt(Timestamp.from(Instant.now()));
+        analytics.setUniqueViewCount((int) uniqueCount);
         analytics.save();
     }
 }

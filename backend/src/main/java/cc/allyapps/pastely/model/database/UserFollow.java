@@ -1,46 +1,20 @@
 package cc.allyapps.pastely.model.database;
 
 import org.javawebstack.orm.Model;
-import org.javawebstack.orm.annotation.Column;
-import org.javawebstack.orm.annotation.Dates;
-import org.javawebstack.orm.annotation.Table;
-import org.javawebstack.webutils.util.RandomUtil;
-
+import org.javawebstack.orm.annotation.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-/**
- * UserFollow - Manages user following relationships
- * Part of the Social Features
- */
-@Dates
 @Table("user_follows")
 public class UserFollow extends Model {
+    @Column(size = 8)
+    private String followerId;
 
     @Column(size = 8)
-    private String id;
-
-    @Column(size = 8)
-    private String followerId; // User who is following
-
-    @Column(size = 8)
-    private String followingId; // User being followed
+    private String followingId;
 
     @Column
-    private Timestamp createdAt;
-
-    public UserFollow() {
-        this.id = RandomUtil.string(8);
-        this.createdAt = Timestamp.from(Instant.now());
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private Timestamp followedAt;
 
     public String getFollowerId() {
         return followerId;
@@ -58,7 +32,23 @@ public class UserFollow extends Model {
         this.followingId = followingId;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public Timestamp getFollowedAt() {
+        return followedAt;
+    }
+
+    public User getFollower() {
+        return User.get(followerId);
+    }
+
+    public User getFollowing() {
+        return User.get(followingId);
+    }
+
+    @Override
+    public void save() {
+        if (followedAt == null) {
+            followedAt = Timestamp.from(Instant.now());
+        }
+        super.save();
     }
 }
