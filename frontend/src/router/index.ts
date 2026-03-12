@@ -13,6 +13,21 @@ const router = createRouter({
       component: () => import('@/views/auth/LoginViaAPI.vue'),
     },
     {
+      path: '/auth/login',
+      name: 'login',
+      component: () => import('@/views/auth/LoginView.vue'),
+    },
+    {
+      path: '/auth/register',
+      name: 'register',
+      component: () => import('@/views/auth/RegisterView.vue'),
+    },
+    {
+      path: '/auth/forgot-password',
+      name: 'forgot-password',
+      component: () => import('@/views/auth/ForgotPasswordView.vue'),
+    },
+    {
       path: '/:paste/embed',
       name: 'paste-embed',
       component: () => import('@/views/PasteEmbed.vue'),

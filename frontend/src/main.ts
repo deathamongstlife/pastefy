@@ -115,9 +115,15 @@ client.interceptors.response.use((response) => {
 })
 
 client.defaults.headers.common = { Accept: `application/json` }
-if (config.value?.apiKey) {
-  client.defaults.headers.common.Authorization = `Bearer ${config.value.apiKey}`
-}
+
+// Request interceptor to add auth token
+client.interceptors.request.use((config) => {
+  const token = localStorage.getItem('pastely_token') || useConfig().value?.apiKey
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
 currentUserStore.fetchUser()
 
 const appInfoStore = useAppInfoStore()

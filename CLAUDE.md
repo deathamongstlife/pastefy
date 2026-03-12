@@ -12,6 +12,7 @@ This document defines the coding standards, conventions, and architectural patte
 - **Search**: Elasticsearch (optional)
 - **Storage**: Database, MinIO (S3-compatible), or HTTP
 - **UI**: PrimeVue 4 with Tailwind CSS 4
+- **Authentication**: Built-in (email/password with Argon2) + OAuth2 (GitHub, Google, Discord, etc.)
 
 ---
 
@@ -59,7 +60,7 @@ public class ResourceController extends HttpController {
 #### Package Structure
 
 ```
-de.interaapps.pastely/
+cc.allyapps.pastely/
 ├── Pastely.java               # Main singleton class
 ├── auth/                      # Authentication & OAuth2
 │   ├── *Middleware.java       # Middleware classes

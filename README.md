@@ -36,6 +36,7 @@ Visit the docs for everything around Pastely here: https://docs.pastely.app
   - [Javascript/Typescript](https://github.com/interaapps/js-api-clients?tab=readme-ov-file#pastefy)
   - [Java](https://github.com/interaapps/pastely-java-apiclient)
   - [Go](https://github.com/interaapps/pastely-go-api)
+- Built-in authentication (email/password with Argon2)
 - OAuth2 Login (InteraApps, Google, GitHub, Discord, Twitch)
 - Folder organization
 - CLI upload: `curl -F f=@file.txt pastely.app`
