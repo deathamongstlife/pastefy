@@ -1,49 +1,105 @@
 <p align="center">
-    <a>
-    <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="/.github/logo-white.svg">
-        <source media="(prefers-color-scheme: light)" srcset="/.github/logo-black.svg" />
-        <img src="/.github/logo-black.svg" width="200px" />
-    </picture>
-    </a>
+    <h1 align="center">Pastely</h1>
+    <p align="center"><em>Advanced code sharing and collaboration platform</em></p>
 </p>
-
 
 <img src="./.github/screenshots/paste.png" width="100%" >
 
-Pastefy is an open source alternative to Gists or Pastebin.<br>
-You want to share some code to your friends or just save it for yourself? Just paste it.
+**Pastely** (formerly Pastefy) is an advanced open-source alternative to Gists or Pastebin with powerful features for developers and teams.
+
+Share code, collaborate in real-time, track analytics, and organize your pastes like never before.
+
+## What's New in Pastely 7.0
+
+This is a **massive enhancement** with 150+ new features across 18 categories:
+
+- **Version Control System** - Git-like branching, diffs, and revision history
+- **Real-time Collaboration** - Live cursor tracking and collaborative editing
+- **Advanced Security** - Password protection, IP filtering, burn-after-read, access logs
+- **Social Features** - Follow users, comments, activity feeds, user profiles
+- **Analytics & Tracking** - View analytics, geographic tracking, trending algorithm
+- **Enhanced Organization** - Collections, nested folders, smart folders
+- **Integrations** - Webhooks, GitHub Gist import/export, API enhancements
+- **Media Support** - File attachments, image uploads
+- **Code Templates** - Reusable templates with categories
+- And much more!
 
 Try out the public instance https://pastefy.app <br>
-Visit the docs for everything around Pastefy here: https://docs.pastefy.app
+Visit the docs for everything around Pastely here: https://docs.pastefy.app
 
-## Features
-- Raw-Preview
-- Copy Button
-- Fork
-- An API ([Docs](https://docs.pastefy.app/api/))
+## Core Features
+
+### Classic Features
+- Raw-Preview & Copy Button
+- Fork & Star pastes
+- Comprehensive API ([Docs](https://docs.pastefy.app/api/))
   - [Javascript/Typescript](https://github.com/interaapps/js-api-clients?tab=readme-ov-file#pastefy)
   - [Java](https://github.com/interaapps/pastefy-java-apiclient)
   - [Go](https://github.com/interaapps/pastefy-go-api)
-- Log in
-  - Folders 
-  - See your created pastes
-  - delete created pastes
-- Create paste with `curl -F f=@file.txt pastefy.app`
-- Extensions:
-  - VS-Code
-  - Raycast
-- Previews for (file extension)
-  - **[See examples here](https://pastefy.app/EByZpNoS)**
-  - Markdown (.md)
-  - Mermaid (.mermaid or .mmd)
-  - SVG (.svg)
-  - CSV (.csv)
-  - GeoJSON (.geojson)
-  - Diff (.diff)
-  - calendar (.ics)
-  - regex (.regex)
-  - [Asciinema recordings](https://docs.pastefy.app/features/integrations/asciinema.html) (.cast) [(Example)](https://pastefy.app/ar9ehz8w)
+- OAuth2 Login (InteraApps, Google, GitHub, Discord, Twitch)
+- Folder organization
+- CLI upload: `curl -F f=@file.txt pastefy.app`
+- Extensions: VS-Code, Raycast
+- Rich Previews: Markdown, Mermaid, SVG, CSV, GeoJSON, Diff, Calendar, Regex, Asciinema
+
+### NEW: Version Control (7.0)
+- Git-like revision history with diffs
+- Branch management
+- Commit messages
+- Rollback to previous versions
+- Compare revisions
+
+### NEW: Real-time Collaboration (7.0)
+- Live collaborative editing
+- Real-time cursor tracking
+- Session management with expiration
+- Multiple participants support
+
+### NEW: Advanced Security (7.0)
+- Password protection with BCrypt
+- IP whitelisting/blacklisting
+- Burn-after-read (max views)
+- Access audit logs
+- Detailed security analytics
+
+### NEW: Social Features (7.0)
+- Follow/unfollow users
+- Comments on pastes (nested support)
+- Activity feeds
+- User profiles with bio/links
+- Social analytics
+
+### NEW: Analytics & Tracking (7.0)
+- View tracking with geographic data
+- Trending algorithm with time decay
+- Timeline visualization
+- Unique vs total views
+- Average time spent analytics
+
+### NEW: Enhanced Organization (7.0)
+- Curated collections
+- Nested folders
+- Smart folders with filters
+- Bulk operations
+
+### NEW: Integrations (7.0)
+- Webhook subscriptions
+- GitHub Gist import/export
+- Enhanced API endpoints
+- Event logging
+
+### NEW: Media & Templates (7.0)
+- File attachments
+- Image uploads with thumbnails
+- Code templates library
+- Template categories
+
+### Coming Soon
+- GraphQL API
+- PWA with offline mode
+- AI code explanations
+- PDF/Image export
+- Browser extension
 
 # Overview
 - [Screenshots](#Screenshots)

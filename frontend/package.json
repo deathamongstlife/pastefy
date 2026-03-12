@@ -1,6 +1,6 @@
 {
-  "name": "frontend-new",
-  "version": "0.0.0",
+  "name": "pastely-frontend",
+  "version": "7.0.0",
   "private": true,
   "type": "module",
   "scripts": {
