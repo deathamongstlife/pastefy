@@ -26,3 +26,23 @@ export type UpdateCollectionRequest = {
   icon?: string
   color?: string
 }
+
+export type PasteCollection = Collection
+
+export type CollectionWithPastes = {
+  collection: Collection
+  pastes: Array<{
+    id: string
+    key: string
+    title: string
+    created_at: string
+  }>
+}
+
+export type CollectionCreateRequest = CreateCollectionRequest
+
+export type CollectionUpdateRequest = UpdateCollectionRequest
+
+export type CollectionAddPasteRequest = {
+  paste_key: string
+}

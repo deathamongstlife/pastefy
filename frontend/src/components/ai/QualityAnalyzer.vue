@@ -161,7 +161,7 @@ function clearAnalysis() {
           <div class="mb-6 text-center">
             <h3 class="mb-4 text-lg font-semibold">Overall Quality Score</h3>
             <Knob
-              v-model="analysis.overall_score"
+              v-model="analysis!.overall_score"
               :readonly="true"
               :size="150"
               :stroke-width="10"
@@ -177,10 +177,10 @@ function clearAnalysis() {
                     Readability
                   </div>
                   <div class="text-3xl font-bold">
-                    {{ analysis.readability }}%
+                    {{ analysis!.readability }}%
                   </div>
                   <ProgressBar
-                    :value="analysis.readability"
+                    :value="analysis!.readability"
                     :show-value="false"
                     class="mt-2"
                   />
@@ -195,10 +195,10 @@ function clearAnalysis() {
                     Maintainability
                   </div>
                   <div class="text-3xl font-bold">
-                    {{ analysis.maintainability }}%
+                    {{ analysis!.maintainability }}%
                   </div>
                   <ProgressBar
-                    :value="analysis.maintainability"
+                    :value="analysis!.maintainability"
                     :show-value="false"
                     class="mt-2"
                   />
@@ -213,10 +213,10 @@ function clearAnalysis() {
                     Complexity
                   </div>
                   <div class="text-3xl font-bold">
-                    {{ 100 - analysis.complexity }}%
+                    {{ 100 - analysis!.complexity }}%
                   </div>
                   <ProgressBar
-                    :value="100 - analysis.complexity"
+                    :value="100 - analysis!.complexity"
                     :show-value="false"
                     class="mt-2"
                   />
@@ -228,11 +228,11 @@ function clearAnalysis() {
             </Card>
           </div>
 
-          <div v-if="analysis.suggestions.length > 0" class="suggestions-section">
+          <div v-if="analysis!.suggestions.length > 0" class="suggestions-section">
             <h3 class="mb-3 text-lg font-semibold">Improvement Suggestions</h3>
             <div class="space-y-3">
               <Card
-                v-for="suggestion in analysis.suggestions"
+                v-for="suggestion in analysis!.suggestions"
                 :key="suggestion.id"
                 class="suggestion-card"
               >

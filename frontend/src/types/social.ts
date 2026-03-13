@@ -44,3 +44,33 @@ export type UserStats = {
   follower_count: number
   following_count: number
 }
+
+export type UserFollow = {
+  id: string
+  follower_id: string
+  following_id: string
+  created_at: string
+  user?: UserProfile
+}
+
+export type PasteComment = {
+  id: string
+  paste_key: string
+  user_id: string
+  content: string
+  created_at: string
+  updated_at: string
+  user?: UserProfile
+}
+
+export type UserActivity = Activity
+
+export type CommentCreateRequest = {
+  content: string
+}
+
+export type CommentUpdateRequest = {
+  content: string
+}
+
+export type UserProfileUpdateRequest = UpdateProfileRequest

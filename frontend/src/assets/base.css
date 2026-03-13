@@ -12,6 +12,31 @@
 @layer tailwind-base, primevue, tailwind-utilities;
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* Cyberpunk palette */
+  --color-cyber-pink: #FF006E;
+  --color-cyber-blue: #00F5FF;
+  --color-cyber-purple: #8B00FF;
+  --color-cyber-yellow: #FFD60A;
+  --color-cyber-green: #00FF41;
+
+  /* Backgrounds */
+  --color-dark-bg: #0A0E27;
+  --color-darker-bg: #050814;
+  --color-card-bg: #151932;
+  --color-hover-bg: #1E2340;
+
+  /* Text */
+  --color-text-primary: #E0E0E0;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #606060;
+
+  /* Accents */
+  --color-neon-border: #00F5FF;
+  --color-glow-pink: #FF006E;
+  --color-glow-blue: #00F5FF;
+}
+
 :root {
   font-family: 'Plus Jakarta Sans Variable', sans-serif;
 }

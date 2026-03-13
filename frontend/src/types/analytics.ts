@@ -22,3 +22,30 @@ export type PasteAnalytics = {
   top_countries: Record<string, number>
   top_referers: Record<string, number>
 }
+
+export type ViewAnalytics = PasteAnalytics
+
+export type TimelineDataPoint = {
+  date: string
+  views: number
+  unique_views: number
+}
+
+export type GeographicDataPoint = {
+  country: string
+  country_code: string
+  views: number
+  percentage: number
+}
+
+export type TrendingItem = {
+  paste_id: string
+  title: string
+  views: number
+  created_at: string
+}
+
+export type ViewTrackRequest = {
+  referer?: string
+  user_agent?: string
+}

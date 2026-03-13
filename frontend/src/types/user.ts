@@ -9,6 +9,9 @@ export type User = {
   auth_type: string
   auth_types: string[]
   type: UserType
+  // Aliases for compatibility
+  avatar_url?: string
+  username?: string
 }
 export type PublicUser = {
   id: string

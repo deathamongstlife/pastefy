@@ -35,7 +35,7 @@ export const useAIStore = defineStore('ai', () => {
         enabled: false,
         gateway_connected: false,
         agent_id: null,
-        message: error.value,
+        message: error.value ?? '',
       }
       return status.value
     } finally {
@@ -51,7 +51,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to explain code'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -65,7 +65,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to detect bugs'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -79,7 +79,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to generate tags'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -93,7 +93,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to translate code'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -107,7 +107,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to analyze code quality'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -121,7 +121,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to generate documentation'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }
@@ -135,7 +135,7 @@ export const useAIStore = defineStore('ai', () => {
       return response.data
     } catch (e: any) {
       error.value = e.response?.data?.message || 'Failed to suggest improvements'
-      throw new Error(error.value)
+      throw new Error(error.value ?? 'Unknown error')
     } finally {
       isLoading.value = false
     }

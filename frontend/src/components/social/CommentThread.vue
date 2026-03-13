@@ -121,7 +121,7 @@ onMounted(() => {
           <div class="flex gap-3">
             <Avatar
               :image="currentUser.user?.avatar_url"
-              :label="currentUser.user?.username[0]"
+              :label="currentUser.user?.username?.[0]"
               shape="circle"
             />
             <div class="flex-1 space-y-2">
@@ -173,7 +173,7 @@ onMounted(() => {
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
 export const CommentItem = defineComponent({
   name: 'CommentItem',

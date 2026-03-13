@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { User } from '@/types/user.ts'
 import { client } from '@/main.ts'
@@ -11,6 +11,8 @@ export const useCurrentUserStore = defineStore('current-user', () => {
   const userLoading = ref(false)
 
   const config = useConfig()
+
+  const isLoggedIn = computed(() => user.value !== undefined)
 
   const userFoldersStore = useUserFoldersStore()
 
@@ -38,5 +40,5 @@ export const useCurrentUserStore = defineStore('current-user', () => {
     userFoldersStore.fetchFolders()
   }
 
-  return { user, logout, setUser, userLoading, fetchUser, authTypes }
+  return { user, logout, setUser, userLoading, fetchUser, authTypes, isLoggedIn }
 })

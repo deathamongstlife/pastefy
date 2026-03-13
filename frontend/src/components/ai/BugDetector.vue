@@ -229,27 +229,9 @@ function exportBugs() {
             <AccordionPanel
               v-for="bug in filteredBugs"
               :key="bug.id"
+              :value="bug.id"
+              :header="`${bug.type} - Line ${bug.line}: ${bug.description}`"
             >
-              <template #header>
-                <div class="flex w-full items-center justify-between">
-                  <div class="flex items-center gap-2">
-                    <Tag :severity="getBugTypeSeverity(bug.type)">
-                      {{ bug.type }}
-                    </Tag>
-                    <span
-                      class="cursor-pointer font-mono text-sm hover:underline"
-                      @click.stop="highlightLine(bug.line)"
-                    >
-                      Line {{ bug.line }}
-                    </span>
-                    <span class="text-sm">{{ bug.description }}</span>
-                  </div>
-                  <span :class="['text-xs font-semibold', getSeverityClass(bug.severity)]">
-                    {{ bug.severity }}
-                  </span>
-                </div>
-              </template>
-
               <div class="space-y-3">
                 <div>
                   <h4 class="mb-1 text-sm font-semibold">Details</h4>
