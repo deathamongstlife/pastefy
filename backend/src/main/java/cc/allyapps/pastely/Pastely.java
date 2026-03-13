@@ -111,7 +111,7 @@ public class Pastely {
         setupMinio();
         setupRedis();
 
-        if (config.has("ai.antrophic.token")) {
+        if (config.has("jarvis.gateway.token")) {
             pasteAI = new PasteAI(this);
         }
     }
@@ -208,7 +208,10 @@ public class Pastely {
                 .map("MINIO_ACCESS_KEY", "minio.access.key")
                 .map("MINIO_SECRET_KEY", "minio.secret.key")
 
-                .map("AI_ANTHROPIC_TOKEN", "ai.antrophic.token")
+                .map("JARVIS_GATEWAY_URL", "jarvis.gateway.url")
+                .map("JARVIS_GATEWAY_TOKEN", "jarvis.gateway.token")
+                .map("JARVIS_AGENT_ID", "jarvis.agent.id")
+                .map("JARVIS_TIMEOUT_MS", "jarvis.timeout.ms")
 
                 .map("DATABASE_CUSTOMPARAMS_CACHE_PREP_STMTS", "database.customparams.cachePrepStmts")
                 .map("DATABASE_CUSTOMPARAMS_PREP_STMT_CACHE_SIZE", "database.customparams.prepStmtCacheSize")

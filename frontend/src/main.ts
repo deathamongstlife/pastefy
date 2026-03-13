@@ -156,8 +156,8 @@ window.pastely = {
 // @ts-ignore
 window.pastefy = window.pastely
 ;(async () => {
-  if ('registerPastelyPlugin' in window && Array.isArray(window.registerPastelyPlugin)) {
-    for (const { entrypoint } of window.registerPastelyPlugin) {
+  if ('registerPastelyPlugins' in window && Array.isArray(window.registerPastelyPlugins)) {
+    for (const { entrypoint } of window.registerPastelyPlugins) {
       await import(entrypoint)
     }
   }

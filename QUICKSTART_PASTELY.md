@@ -46,10 +46,24 @@ DATABASE_USER=root
 DATABASE_PASSWORD=your_password
 
 # Auto-migration is enabled by default
-PASTEFY_AUTOMIGRATE=true
+PASTELY_AUTOMIGRATE=true
 ```
 
-3. **Run**
+3. **Configure J.A.R.V.I.S AI (Optional)**
+```env
+# J.A.R.V.I.S Gateway Configuration
+JARVIS_GATEWAY_URL=http://127.0.0.1:18789
+JARVIS_GATEWAY_TOKEN=your-jarvis-token
+JARVIS_AGENT_ID=main
+JARVIS_TIMEOUT_MS=30000
+```
+
+To get a J.A.R.V.I.S token:
+- Visit the J.A.R.V.I.S Gateway documentation
+- Create an agent with ID "main"
+- Copy the API token to your `.env` file
+
+4. **Run**
 ```bash
 java -jar backend/target/backend.jar
 ```
@@ -518,3 +532,96 @@ Contributions welcome! Areas to contribute:
 ---
 
 **Happy Coding with Pastely 7.0!** 🚀
+
+### 9. AI-Powered Features
+
+**Check AI Status**
+```bash
+curl http://localhost/api/v2/ai/status
+```
+
+**Explain Code**
+```bash
+curl -X POST http://localhost/api/v2/ai/explain \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "function hello() { console.log(\"Hello World\"); }",
+    "language": "javascript"
+  }'
+```
+
+**Detect Bugs**
+```bash
+curl -X POST http://localhost/api/v2/ai/detect-bugs \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "def divide(a, b):\n    return a / b",
+    "language": "python"
+  }'
+```
+
+**Generate Tags**
+```bash
+curl -X POST http://localhost/api/v2/ai/generate-tags \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "React Hook Example",
+    "content": "import { useState } from \"react\"...",
+    "language": "typescript"
+  }'
+```
+
+**Translate Code**
+```bash
+curl -X POST http://localhost/api/v2/ai/translate \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "function add(a, b) { return a + b; }",
+    "fromLanguage": "javascript",
+    "toLanguage": "python"
+  }'
+```
+
+**Analyze Code Quality**
+```bash
+curl -X POST http://localhost/api/v2/ai/quality \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "public class Example { ... }",
+    "language": "java"
+  }'
+```
+
+**Generate Documentation**
+```bash
+curl -X POST http://localhost/api/v2/ai/docs \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "function calculate(x, y) { return x * y; }",
+    "language": "javascript",
+    "format": "markdown"
+  }'
+```
+
+**Suggest Improvements**
+```bash
+curl -X POST http://localhost/api/v2/ai/improve \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "var x = 1; var y = 2; console.log(x + y);",
+    "language": "javascript"
+  }'
+```
+
+All AI features require:
+- J.A.R.V.I.S Gateway configured in `.env`
+- Valid API authentication
+- Active internet connection to J.A.R.V.I.S Gateway
+

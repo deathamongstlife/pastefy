@@ -95,10 +95,18 @@ Visit the docs for everything around Pastely here: https://docs.pastely.app
 - Code templates library
 - Template categories
 
+### NEW: AI-Powered Features (7.0)
+- Code explanation with J.A.R.V.I.S
+- Automated bug detection
+- Code quality analysis
+- Language translation
+- Auto-generated documentation
+- Smart tag generation
+- Code improvement suggestions
+
 ### Coming Soon
 - GraphQL API
 - PWA with offline mode
-- AI code explanations
 - PDF/Image export
 - Browser extension
 

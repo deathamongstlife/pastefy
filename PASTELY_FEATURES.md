@@ -15,7 +15,8 @@ Pastely (formerly Pastefy) 7.0 is a massive enhancement that adds 150+ advanced 
 7. [Integrations](#integrations)
 8. [Media Support](#media-support)
 9. [Code Templates](#code-templates)
-10. [API Reference](#api-reference)
+10. [AI-Powered Features](#ai-powered-features)
+11. [API Reference](#api-reference)
 
 ---
 
@@ -590,3 +591,178 @@ Pastely 7.0 enhancement adds:
 - Advanced analytics
 - Social features
 - And much more!
+
+---
+
+## AI-Powered Features
+
+Intelligent code analysis and assistance powered by J.A.R.V.I.S AI Gateway.
+
+### Features
+
+- **Code Explanation**: Get detailed explanations of code functionality
+- **Bug Detection**: Automatically identify bugs and security vulnerabilities
+- **Quality Analysis**: Comprehensive code quality metrics and recommendations
+- **Language Translation**: Convert code between programming languages
+- **Auto-Documentation**: Generate documentation in multiple formats
+- **Tag Generation**: Smart tag suggestions based on code content
+- **Improvement Suggestions**: AI-powered code optimization recommendations
+
+### Backend Components
+
+- `JarvisClient` - HTTP client for J.A.R.V.I.S Gateway API
+- `PasteAI` - AI service orchestration layer
+- `PasteAIController` - REST API endpoints for AI features
+
+### Configuration
+
+Add to `.env`:
+```env
+JARVIS_GATEWAY_URL=http://127.0.0.1:18789
+JARVIS_GATEWAY_TOKEN=your-token-here
+JARVIS_AGENT_ID=main
+JARVIS_TIMEOUT_MS=30000
+```
+
+### API Endpoints
+
+```
+GET    /api/v2/ai/status
+POST   /api/v2/ai/explain
+POST   /api/v2/ai/detect-bugs
+POST   /api/v2/ai/generate-tags
+POST   /api/v2/ai/translate
+POST   /api/v2/ai/quality
+POST   /api/v2/ai/docs
+POST   /api/v2/ai/improve
+```
+
+### Usage Example
+
+**Code Explanation**
+```typescript
+import { useAIStore } from '@/stores/ai'
+
+const aiStore = useAIStore()
+
+// Check if AI is available
+await aiStore.checkStatus()
+
+if (aiStore.isAIEnabled) {
+  // Explain code
+  const result = await aiStore.explainCode({
+    code: 'function add(a, b) { return a + b; }',
+    language: 'javascript'
+  })
+  console.log(result.result)
+}
+```
+
+**Bug Detection**
+```typescript
+const bugs = await aiStore.detectBugs({
+  code: sourceCode,
+  language: 'python'
+})
+
+if (bugs.has_critical_issues) {
+  console.warn('Critical issues found:', bugs.bugs)
+}
+```
+
+**Quality Analysis**
+```typescript
+const quality = await aiStore.analyzeQuality({
+  code: sourceCode,
+  language: 'java'
+})
+
+console.log('Overall Score:', quality.overall_score)
+console.log('Readability:', quality.readability)
+console.log('Complexity:', quality.complexity)
+```
+
+**Code Translation**
+```typescript
+const translated = await aiStore.translateCode({
+  code: 'function hello() { console.log("Hi"); }',
+  fromLanguage: 'javascript',
+  toLanguage: 'python'
+})
+
+console.log(translated.result)
+// Output: def hello():\n    print("Hi")
+```
+
+**Generate Documentation**
+```typescript
+const docs = await aiStore.generateDocumentation({
+  code: sourceCode,
+  language: 'typescript',
+  format: 'markdown'
+})
+
+console.log(docs.result)
+```
+
+**Suggest Improvements**
+```typescript
+const improvements = await aiStore.suggestImprovements({
+  code: sourceCode,
+  language: 'javascript'
+})
+
+improvements.improvements.forEach(imp => {
+  console.log(`[${imp.priority}] ${imp.category}: ${imp.description}`)
+  console.log(`Suggestion: ${imp.code_snippet}`)
+})
+```
+
+### Response Types
+
+**AIStatusResponse**
+```typescript
+{
+  enabled: boolean
+  gateway_connected: boolean
+  agent_id: string | null
+  message: string
+}
+```
+
+**BugDetectionResponse**
+```typescript
+{
+  bugs: Array<{
+    line?: number
+    severity: 'low' | 'medium' | 'high' | 'critical'
+    description: string
+    suggestion: string
+  }>
+  has_critical_issues: boolean
+  summary: string
+}
+```
+
+**QualityAnalysisResponse**
+```typescript
+{
+  overall_score: number
+  readability: number
+  maintainability: number
+  complexity: 'low' | 'medium' | 'high'
+  best_practices: number
+  issues: string[]
+  strengths: string[]
+  summary: string
+}
+```
+
+### Features
+
+- All AI endpoints require authentication
+- Graceful degradation if J.A.R.V.I.S is not configured
+- Configurable timeout for AI operations
+- Support for multiple programming languages
+- JSON-structured responses for easy integration
+
