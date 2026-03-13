@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Collaboration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        input, button, textarea {
+            padding: 8px 12px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .users {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .user-badge {
+            padding: 5px 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 2px 0;
+            padding: 2px 5px;
+        }
+        .log-entry.sent {
+            color: #0066cc;
+        }
+        .log-entry.received {
+            color: #009900;
+        }
+        .log-entry.error {
+            color: #cc0000;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>WebSocket Collaboration Test</h1>
+
+    <div class="container">
+        <h2>Connection</h2>
+        <div>
+            <label>Session ID:</label>
+            <input type="text" id="sessionId" value="test-session-123" placeholder="Session ID">
+        </div>
+        <div>
+            <label>User ID:</label>
+            <input type="text" id="userId" value="test-user-1" placeholder="User ID">
+        </div>
+        <div>
+            <label>Paste ID:</label>
+            <input type="text" id="pasteId" value="test-paste-1" placeholder="Paste ID">
+        </div>
+        <div>
+            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+        </div>
+        <div id="status" class="status disconnected">Disconnected</div>
+    </div>
+
+    <div class="container">
+        <h2>Active Users</h2>
+        <div id="users" class="users">
+            <span>No users</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Editor</h2>
+        <textarea id="editor" placeholder="Type here to edit..."></textarea>
+        <div>
+            <button onclick="sendCursor()">Send Cursor Update</button>
+            <button onclick="sendPing()">Send Ping</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Message Log</h2>
+        <div id="log" class="log"></div>
+        <button onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <script>
+        let ws = null;
+        let lastContent = '';
+        let version = 0;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStatus(connected) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${connected ? 'connected' : 'disconnected'}`;
+            statusDiv.textContent = connected ? 'Connected' : 'Disconnected';
+
+            document.getElementById('connectBtn').disabled = connected;
+            document.getElementById('disconnectBtn').disabled = !connected;
+        }
+
+        function updateUsers(users) {
+            const usersDiv = document.getElementById('users');
+            if (!users || users.length === 0) {
+                usersDiv.innerHTML = '<span>No users</span>';
+                return;
+            }
+
+            usersDiv.innerHTML = users.map(user =>
+                `<div class="user-badge">${user.username || user.id}</div>`
+            ).join('');
+        }
+
+        function connect() {
+            const sessionId = document.getElementById('sessionId').value;
+            const userId = document.getElementById('userId').value;
+            const pasteId = document.getElementById('pasteId').value;
+
+            if (!sessionId || !userId || !pasteId) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/api/v2/ws/collaboration/${sessionId}`;
+
+            log(`Connecting to ${wsUrl}`, 'info');
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = () => {
+                log('WebSocket connected', 'info');
+                updateStatus(true);
+
+                // Send join message
+                const joinMessage = {
+                    type: 'join',
+                    sessionId: sessionId,
+                    userId: userId,
+                    pasteId: pasteId
+                };
+                send(joinMessage);
+            };
+
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                log(`RECEIVED: ${JSON.stringify(message)}`, 'received');
+                handleMessage(message);
+            };
+
+            ws.onclose = () => {
+                log('WebSocket disconnected', 'info');
+                updateStatus(false);
+                updateUsers([]);
+            };
+
+            ws.onerror = (error) => {
+                log(`WebSocket error: ${error}`, 'error');
+            };
+
+            // Set up editor listeners
+            const editor = document.getElementById('editor');
+            editor.oninput = handleEditorChange;
+            editor.onclick = sendCursor;
+            editor.onkeyup = sendCursor;
+        }
+
+        function disconnect() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+
+        function send(message) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                const json = JSON.stringify(message);
+                ws.send(json);
+                log(`SENT: ${json}`, 'sent');
+            } else {
+                log('Cannot send: WebSocket not connected', 'error');
+            }
+        }
+
+        function handleMessage(message) {
+            switch (message.type) {
+                case 'user_joined':
+                    if (message.users) {
+                        updateUsers(message.users);
+                    }
+                    if (message.user) {
+                        log(`User joined: ${message.user.username}`, 'info');
+                    }
+                    break;
+
+                case 'user_left':
+                    log(`User left: ${message.userId}`, 'info');
+                    break;
+
+                case 'cursor_update':
+                    log(`Cursor update from ${message.userId}: Line ${message.position.line}, Col ${message.position.column}`, 'info');
+                    break;
+
+                case 'edit_broadcast':
+                    log(`Edit from ${message.userId}: ${message.operation.type} at ${message.operation.position}`, 'info');
+                    applyRemoteEdit(message.operation);
+                    break;
+
+                case 'pong':
+                    log('Received pong', 'info');
+                    break;
+
+                case 'error':
+                    log(`Error: ${message.error}`, 'error');
+                    break;
+            }
+        }
+
+        function handleEditorChange() {
+            const editor = document.getElementById('editor');
+            const newContent = editor.value;
+
+            if (newContent === lastContent) {
+                return;
+            }
+
+            const operation = calculateOperation(lastContent, newContent);
+            if (operation) {
+                operation.version = version++;
+                send({
+                    type: 'edit',
+                    operation: operation
+                });
+            }
+
+            lastContent = newContent;
+        }
+
+        function calculateOperation(oldText, newText) {
+            let position = 0;
+            while (position < oldText.length && position < newText.length && oldText[position] === newText[position]) {
+                position++;
+            }
+
+            if (newText.length > oldText.length) {
+                return {
+                    type: 'insert',
+                    position: position,
+                    text: newText.substring(position, position + (newText.length - oldText.length)),
+                    version: version
+                };
+            } else if (newText.length < oldText.length) {
+                return {
+                    type: 'delete',
+                    position: position,
+                    text: oldText.substring(position, position + (oldText.length - newText.length)),
+                    version: version
+                };
+            }
+
+            return null;
+        }
+
+        function applyRemoteEdit(operation) {
+            const editor = document.getElementById('editor');
+            const text = editor.value;
+
+            let newText;
+            switch (operation.type) {
+                case 'insert':
+                    newText = text.substring(0, operation.position) + operation.text + text.substring(operation.position);
+                    break;
+                case 'delete':
+                    newText = text.substring(0, operation.position) + text.substring(operation.position + operation.text.length);
+                    break;
+                case 'replace':
+                    newText = text.substring(0, operation.position) + operation.text + text.substring(operation.position + operation.text.length);
+                    break;
+                default:
+                    return;
+            }
+
+            editor.value = newText;
+            lastContent = newText;
+            version = operation.version + 1;
+        }
+
+        function sendCursor() {
+            const editor = document.getElementById('editor');
+            const position = editor.selectionStart;
+            const textBefore = editor.value.substring(0, position);
+            const lines = textBefore.split('\n');
+
+            send({
+                type: 'cursor',
+                position: {
+                    line: lines.length,
+                    column: lines[lines.length - 1].length
+                }
+            });
+        }
+
+        function sendPing() {
+            send({ type: 'ping' });
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Initialize
+        document.getElementById('editor').value = 'Hello, World!\n\nStart typing to test real-time collaboration.';
+        lastContent = document.getElementById('editor').value;
+    </script>
+</body>
+</html>
